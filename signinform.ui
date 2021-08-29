@@ -62,8 +62,8 @@
   <widget class="QPushButton" name="signInPushButton">
    <property name="geometry">
     <rect>
-     <x>112</x>
-     <y>257</y>
+     <x>130</x>
+     <y>260</y>
      <width>121</width>
      <height>51</height>
     </rect>

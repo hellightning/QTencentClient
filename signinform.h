@@ -24,7 +24,6 @@ public:
 
 private slots:
     void on_signInPushButton_clicked();
-
     void on_registerPushButton_clicked();
 
 private:
