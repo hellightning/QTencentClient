@@ -17,7 +17,7 @@ public:
     ~SignInForm();
 
     QtId get_qtid();
-    void set_qtid();
+    void set_qtid(QtId);
     QString get_password();
     void set_adapter(ClientAdapter*);
     void show_alert(QString);

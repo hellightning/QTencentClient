@@ -23,8 +23,9 @@ QtId SignInForm::get_qtid() {
     return ui ->qidTextEdit ->text().toInt();
 }
 
-void SignInForm::set_qtid() {
-
+//更改ui界面上的登录账号
+void SignInForm::set_qtid(QtId id) {
+    ui ->qidTextEdit ->setText(QString(id));
 }
 
 QString SignInForm::get_password() {
@@ -48,11 +49,11 @@ void SignInForm::on_signInPushButton_clicked() {
      } else {
          //传给Adapter,请求服务器验证
          //qDebug() << "发送请求" << endl;
-         adapter->make_sign_request(get_qtid(),get_password());
+         adapter->sign_in(get_qtid(),get_password());
      }
 }
 
 void SignInForm::on_registerPushButton_clicked(){
-    adapter->jumpto_register_form();
+    //adapter->jumpto_register_form();
 }
 
