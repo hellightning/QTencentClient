@@ -20,42 +20,101 @@ class RegisterForm;
 class SignInForm;
 class FriendListForm;
 
+enum Status {
+    SUCCESS,
+    FAILED
+};
+
 typedef int QtId;
+typedef std::tuple<QtId, QString> User;
+
 class ClientAdapter : public QObject
 {
     Q_OBJECT
 public:
     explicit ClientAdapter(QObject *parent = nullptr);
     // static ClientAdapter* get_instance();
+
+    ////////////////////////////////////////////////////
+    /// Server -> UI
+    ////////////////////////////////////////////////////
+
     /**
      * @brief 更新注册状态
-     * @param 用户id
+     * @param stat 状态
+     * @param id 用户id，不成功返回-1
+     * @param errmsg 不成功返回的信息
      */
-    void update_register_status(QtId);
+    void update_register_status(Status stat, QtId id, QString errmsg = "");
     /**
      * @brief 更新登陆状态
+     * @param stat 状态
+     * @param nickname 昵称
+     * @param errmsg 不成功返回的信息
      */
-    void update_sign_status();
+    void update_sign_status(Status stat, QString nickname, QString errmsg = "");
+
     /**
      * @brief 更新好友列表
+     * @param stat 状态
+     * @param friends 好友列表
+     * @param errmsg 错误信息
      */
-    void update_friend_list();
+    void update_friend_list_status(Status stat, QList<std::tuple<QtId, QString>> friends, QString errmsg = "");
     /**
-     * @brief 显示消息
+     * @brief 添加好友
+     * @param stat 状态
+     * @param mFriend 好友信息
+     * @param errmsg 错误信息
      */
-    void write_message();
+    void update_add_friend_status(Status stat, std::tuple<QtId, QString> mFriend, QString errmsg = "");
+
+    /**
+     * @brief 接收到消息
+     * @param stat 状态
+     * @param msg 消息
+     * @param errmsg 错误信息
+     */
+    void update_receive_message_status(Status stat, Message msg, QString errmsg);
+
+    ///////////////////////////////////////////////////
+    /// UI -> Server
+    ///////////////////////////////////////////////////
+
+    /**
+     * @brief 发送消息的请求
+     * @param author 消息发送者
+     * @param msg 消息本体
+     */
+    void make_send_message_request(User author, Message msg);
     /**
      * @brief 发送登录请求
+     * @param userid 用户ID
+     * @param pwd 密码
      */
-    void make_sign_request(int, QString);
+    void make_sign_request(QtId userid, QString pwd);
     /**
      * @brief 发送注册请求
+     * @param nickname 昵称
+     * @param pwd 密码
      */
-    void make_register_request(QString, QString);
+    void make_register_request(QString nickname, QString pwd);
+    /**
+     * @brief 获取用户信息的请求
+     * @param userid 用户ID
+     */
+    void make_get_friends_request(QtId userid);
+    /**
+     * @brief 添加好友的请求
+     * @param userid 用户ID
+     * @param friendid 对方ID
+     */
+    void make_add_friend_request(QtId userid, QtId friendid);
 
 private:
     bool is_signed = false; // 是否登录
     QtId cliend_id = 114514; // 客户端id
+    QString nick_name;
 //     static ClientAdapter* instance; 不做单例也行
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
 

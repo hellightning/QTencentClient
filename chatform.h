@@ -5,7 +5,9 @@
 
 class ClientAdapter;
 
-typedef QString Message;
+typedef int QtId;
+// QtId: 发送者ID，QString 发送者昵称，QString 消息体
+typedef std::tuple<QtId, QString, QString> Message;
 namespace Ui {
 class ChatForm;
 }
