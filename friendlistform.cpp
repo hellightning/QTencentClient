@@ -14,28 +14,23 @@ FriendListForm::~FriendListForm()
     delete ui;
 }
 
-void FriendListForm::set_qtid(QtId)
-{
+void FriendListForm::set_qtid(QtId id) {
+    ui ->qtIdLabel ->setText(QString(id));
+}
+
+void FriendListForm::set_nickname(QString nick) {
+    ui ->MyNicknameLabel ->setText(nick);
+}
+
+void FriendListForm::set_friend_list(QList<QtId>) {
 
 }
 
-void FriendListForm::set_nickname(QString)
-{
+void FriendListForm::emphasis_friend_item(QtId id) {
 
 }
 
-void FriendListForm::set_friend_list(QList<QtId>)
-{
-
-}
-
-void FriendListForm::emphasis_friend_item(QtId)
-{
-
-}
-
-void FriendListForm::on_friendListWidget_itemDoubleClicked(QListWidgetItem *item)
-{
+void FriendListForm::on_friendListWidget_itemDoubleClicked(QListWidgetItem *item) {
 
 }
 

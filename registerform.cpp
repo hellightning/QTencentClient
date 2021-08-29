@@ -27,7 +27,7 @@ QString RegisterForm::get_password() {
     return ui -> passwordSetter ->text();
 }
 
-//摁下确认注册时，ui提示 若格式符合向服务器申请注册
+//确定事件点击
 void RegisterForm::on_confirmPushButton_clicked() {
     qDebug() << "Clicked" << endl;
     if(ui ->nickNameTextEdit ->text().isEmpty()) {
@@ -35,9 +35,9 @@ void RegisterForm::on_confirmPushButton_clicked() {
     } else if(!check_password()) {
         //do nothing!
     } else {
+        //向服务器申请注册当前账号
         adapter->make_register(ui->nickNameTextEdit->text(),ui->passwordSetter->text());
         ui ->confirmPushButton -> setEnabled(false);
-
     }
 }
 
@@ -65,8 +65,8 @@ void RegisterForm::show_alert(QString warningMsg) {
     }
 }
 
-void RegisterForm::failed_register() {
-    show_alert("注册失败");
+void RegisterForm::failed_msg(QString str) {
+    show_alert("注册失败" + str);
 }
 
 void RegisterForm::show_qtid(QtId id) {

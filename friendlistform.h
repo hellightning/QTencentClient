@@ -18,6 +18,7 @@ class FriendListForm : public QWidget
 public:
     explicit FriendListForm(QWidget *parent = nullptr);
     ~FriendListForm();
+    //设置当前窗口用户数据
     void set_qtid(QtId);
     void set_nickname(QString);
     void set_friend_list(QList<QtId>);

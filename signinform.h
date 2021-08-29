@@ -21,6 +21,7 @@ public:
     QString get_password();
     void set_adapter(ClientAdapter*);
     void show_alert(QString);
+    void failed_sign(QString);
 
 private slots:
     void on_signInPushButton_clicked();

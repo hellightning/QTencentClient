@@ -53,7 +53,12 @@ void SignInForm::on_signInPushButton_clicked() {
      }
 }
 
+void SignInForm::failed_sign(QString failedMsg) {
+     show_alert(failedMsg);
+}
+
 void SignInForm::on_registerPushButton_clicked(){
+    //需要跳转到注册界面
     //adapter->jumpto_register_form();
 }
 

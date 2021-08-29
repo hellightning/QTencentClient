@@ -20,7 +20,7 @@ public:
     QString get_password();
     void set_adapter(ClientAdapter*);
     void show_qtid(QtId);
-    void failed_register();
+    void failed_msg(QString);
 
 private slots:
     void on_confirmPushButton_clicked();
