@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="qidTextEdit">
    <property name="geometry">
     <rect>
      <x>230</x>
@@ -33,7 +33,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>QtId</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
@@ -46,10 +46,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>密码</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="passwordTextEdit">
    <property name="geometry">
     <rect>
      <x>230</x>
@@ -69,7 +69,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>登录</string>
    </property>
   </widget>
   <widget class="QPushButton" name="registerPushButton">
@@ -82,7 +82,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>注册</string>
    </property>
   </widget>
  </widget>

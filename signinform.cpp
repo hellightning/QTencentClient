@@ -9,6 +9,9 @@ SignInForm::SignInForm(QWidget *parent) :
     ui->setupUi(this);
 }
 
+void SignInForm::set_adapter(ClientAdapter *cli) {
+     adapter = cli;
+}
 SignInForm::~SignInForm()
 {
     delete ui;
@@ -38,13 +41,6 @@ void SignInForm::on_signInPushButton_clicked()
 {
 
 }
-
-void SignInForm::on_pushButton_2_clicked()
-{
-
-}
-
-
 
 
 
