@@ -73,30 +73,30 @@ void ClientAdapter::update_receive_message_status(Status stat, Message msg, QStr
 
 void ClientAdapter::send_message(QtId friendId, QString msg)
 {
-    auto handler = ClientSocketHandler::get_instance();
-    handler->make_send_message_request(
-                std::make_tuple(cliend_id, nick_name),
-                std::make_tuple(friendId, qtid_to_nickname[friendId], msg));
+//    auto handler = ClientSocketHandler::get_instance();
+//    handler->make_send_message_request(
+//                std::make_tuple(cliend_id, nick_name),
+//                std::make_tuple(friendId, qtid_to_nickname[friendId], msg));
 }
 
 void ClientAdapter::sign_in(QtId userid, QString pwd)
 {
-    auto handler = ClientSocketHandler::get_instance();
-    this->cliend_id = userid;
-    handler->make_sign_request(userid, pwd);
+//    auto handler = ClientSocketHandler::get_instance();
+//    this->cliend_id = userid;
+//    handler->make_sign_request(userid, pwd);
 }
 
 void ClientAdapter::make_register(QString nickname, QString pwd)
 {
-    auto handler = ClientSocketHandler::get_instance();
-    this->nick_name = nickname;
-    handler->make_register_request(nickname, pwd);
+//    auto handler = ClientSocketHandler::get_instance();
+//    this->nick_name = nickname;
+//    handler->make_register_request(nickname, pwd);
 }
 
 void ClientAdapter::add_friend(QtId friendID)
 {
-    auto handler = ClientSocketHandler::get_instance();
-    handler->make_add_friend_request(cliend_id, friendID);
+//    auto handler = ClientSocketHandler::get_instance();
+//    handler->make_add_friend_request(cliend_id, friendID);
 }
 
 void ClientAdapter::open_chatform(QtId friendID)
