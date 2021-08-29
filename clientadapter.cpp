@@ -3,12 +3,15 @@
 #include "registerform.h"
 #include "friendlistform.h"
 #include "clientsockethandler.h"
+#include <QWidget>
 
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
     sign_in_form = new SignInForm();
     sign_in_form->show();
     sign_in_form->set_adapter(this);
+
+    io_handler = new IOHandler();
 }
 
 void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
@@ -16,14 +19,16 @@ void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
     if (stat == SUCCESS) {
         this->cliend_id = id;
         if (register_form != nullptr) {
-            register_form->show_qtid(id);
+//            register_form->show_qtid(id);
             register_form = nullptr;
         }
         if (sign_in_form != nullptr) {
-            sign_in_form->set_qtid(id);
+//            sign_in_form->set_qtid(id);
         }
     } else {
-
+        if (register_form != nullptr) {
+//            register_form->failed_msg(errmsg);
+        }
     }
 }
 
@@ -37,9 +42,11 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
         friend_list_form = new FriendListForm();
         friend_list_form->set_qtid(cliend_id);
         friend_list_form->set_nickname(nickname);
+        auto handler = ClientSocketHandler::get_instance();
+        handler->make_get_friends_request(cliend_id);
     } else {
         if (register_form != nullptr) {
-            register_form->failed_register();
+//            register_form->failed_sign(errmsg);
         }
     }
 }
@@ -47,27 +54,39 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
 void ClientAdapter::update_friend_list_status(Status stat, QList<std::tuple<QtId, QString> > friends, QString errmsg)
 {
     if (stat == SUCCESS) {
-
+        foreach (auto& frd, friends) {
+            auto& [id, nname] = frd;
+            qtid_to_nickname[id] = nname;
+        }
+//        friend_list_form->set_friend_list(friends);
     } else {
-
+//        friend_list_form->show_error(msg);
     }
 }
 
 void ClientAdapter::update_add_friend_status(Status stat, std::tuple<QtId, QString> mFriend, QString errmsg)
 {
     if (stat == SUCCESS) {
-
+        auto& [id, nname] = mFriend;
+        qtid_to_nickname[id] = nname;
+//        friend_list_form->add_friend(mFriend);
     } else {
-
+//        friend_list_form->show_error(msg);
     }
 }
 
 void ClientAdapter::update_receive_message_status(Status stat, Message msg, QString errmsg)
 {
+    auto& [id, nname, body] = msg;
     if (stat == SUCCESS) {
-
+        if (qtid_to_chatform[id] != nullptr) {
+//            qtid_to_chatform[id]->update_list_widget(msg);
+        } else {
+            // 序列化，TODO
+            friend_list_form->emphasis_friend_item(id);
+        }
     } else {
-
+        return;
     }
 }
 
@@ -101,5 +120,19 @@ void ClientAdapter::add_friend(QtId friendID)
 
 void ClientAdapter::open_chatform(QtId friendID)
 {
-
+    if (qtid_to_chatform[friendID] == nullptr) {
+        qtid_to_chatform[friendID] = new ChatForm(nullptr);
+        auto res = io_handler->unserialize_storage(friendID);
+        auto nick = qtid_to_nickname[friendID];
+        if (res.qtid != -1) {
+            QList<Message> lst;
+            foreach(auto& v, res.message)
+                lst.append(std::make_tuple(friendID, nick, v));
+//            qtid_to_chatform[friendID]->init_list_widget(lst);
+        }
+    } else {
+        Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();
+        qtid_to_chatform[friendID]->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
+        qtid_to_chatform[friendID]->show();
+    }
 }

@@ -15,6 +15,7 @@
 #define CLIENTADAPTER_H
 #include <QObject>
 #include "chatform.h"
+#include "iohandler.h"
 
 class RegisterForm;
 class SignInForm;
@@ -119,10 +120,11 @@ private:
 //     static ClientAdapter* instance; 不做单例也行
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
     QHash<QtId, QString> qtid_to_nickname;
+
     RegisterForm* register_form = nullptr;
     SignInForm* sign_in_form = nullptr;
     FriendListForm* friend_list_form = nullptr;
-
+    IOHandler* io_handler = nullptr;
 signals:
 
 };

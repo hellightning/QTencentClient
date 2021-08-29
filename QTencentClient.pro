@@ -2,7 +2,7 @@ QT       += core gui network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -13,6 +13,7 @@ SOURCES += \
     clientadapter.cpp \
     clientsockethandler.cpp \
     friendlistform.cpp \
+    iohandler.cpp \
     main.cpp \
     registerform.cpp \
     signinform.cpp
@@ -22,6 +23,7 @@ HEADERS += \
     clientadapter.h \
     clientsockethandler.h \
     friendlistform.h \
+    iohandler.h \
     registerform.h \
     signinform.h
 
