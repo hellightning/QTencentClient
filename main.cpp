@@ -5,7 +5,6 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    SignInForm w;
-    w.show();
+    ClientAdapter adapter();
     return a.exec();
 }

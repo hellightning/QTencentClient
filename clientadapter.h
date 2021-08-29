@@ -47,11 +47,11 @@ public:
     /**
      * @brief 发送登录请求
      */
-    void make_sign_request();
+    void make_sign_request(int, QString);
     /**
      * @brief 发送注册请求
      */
-    void make_register_request();
+    void make_register_request(QString, QString);
 
 private:
     bool is_signed = false; // 是否登录
