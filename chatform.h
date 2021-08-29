@@ -2,6 +2,9 @@
 #define CHATFORM_H
 
 #include <QWidget>
+
+class ClientAdapter;
+
 typedef QString Message;
 namespace Ui {
 class ChatForm;

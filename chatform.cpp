@@ -1,5 +1,6 @@
 #include "chatform.h"
 #include "ui_chatform.h"
+#include "clientadapter.h"
 
 ChatForm::ChatForm(QWidget *parent) :
     QWidget(parent),

@@ -2,6 +2,7 @@
 #define REGISTERFORM_H
 
 #include <QWidget>
+class ClientAdapter;
 
 typedef int QtId;
 namespace Ui {

@@ -1,5 +1,6 @@
 #include "signinform.h"
 #include "ui_signinform.h"
+#include "clientadapter.h"
 
 SignInForm::SignInForm(QWidget *parent) :
     QWidget(parent),

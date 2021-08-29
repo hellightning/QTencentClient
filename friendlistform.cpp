@@ -1,5 +1,6 @@
 #include "friendlistform.h"
 #include "ui_friendlistform.h"
+#include "clientadapter.h"
 
 FriendListForm::FriendListForm(QWidget *parent) :
     QWidget(parent),

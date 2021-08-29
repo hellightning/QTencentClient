@@ -1,5 +1,6 @@
 #include "registerform.h"
 #include "ui_registerform.h"
+#include "clientadapter.h"
 
 RegisterForm::RegisterForm(QWidget *parent) :
     QWidget(parent),

@@ -1,13 +1,16 @@
 #include "clientadapter.h"
+#include "signinform.h"
+#include "registerform.h"
+#include "friendlistform.h"
 
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
 
 }
 
-void ClientAdapter::update_register_status(QtId)
+void ClientAdapter::update_register_status(QtId id)
 {
-
+    this->cliend_id = id;
 }
 
 void ClientAdapter::update_sign_status()

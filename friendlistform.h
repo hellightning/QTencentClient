@@ -4,6 +4,8 @@
 #include <QWidget>
 #include<QListWidget>
 
+class ClientAdapter;
+
 typedef int QtId;
 namespace Ui {
 class FriendListForm;
