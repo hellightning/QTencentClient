@@ -86,30 +86,31 @@ public:
      * @param author 消息发送者
      * @param msg 消息本体
      */
-    void make_send_message_request(User author, Message msg);
+    void send_message(QtId friendId, QString msg);
     /**
      * @brief 发送登录请求
      * @param userid 用户ID
      * @param pwd 密码
      */
-    void make_sign_request(QtId userid, QString pwd);
+    void sign_in(QtId userid, QString pwd);
     /**
      * @brief 发送注册请求
      * @param nickname 昵称
      * @param pwd 密码
      */
-    void make_register_request(QString nickname, QString pwd);
-    /**
-     * @brief 获取用户信息的请求
-     * @param userid 用户ID
-     */
-    void make_get_friends_request(QtId userid);
+    void make_register(QString nickname, QString pwd);
     /**
      * @brief 添加好友的请求
      * @param userid 用户ID
      * @param friendid 对方ID
      */
-    void make_add_friend_request(QtId userid, QtId friendid);
+    void add_friend(QtId friendID);
+
+    /**
+     * @brief 双击之后打开
+     * @param friendID 好友ID
+     */
+    void open_chatform(QtId friendID);
 
 private:
     bool is_signed = false; // 是否登录
@@ -117,7 +118,7 @@ private:
     QString nick_name;
 //     static ClientAdapter* instance; 不做单例也行
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
-
+    QHash<QtId, QString> qtid_to_nickname;
     RegisterForm* register_form = nullptr;
     SignInForm* sign_in_form = nullptr;
     FriendListForm* friend_list_form = nullptr;
