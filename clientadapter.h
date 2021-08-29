@@ -76,7 +76,7 @@ public:
      * @param msg 消息
      * @param errmsg 错误信息
      */
-    void update_receive_message_status(Status stat, Message msg, QString errmsg);
+    void update_receive_message_status(Status stat, QList<Message> msg, QString errmsg);
 
     ///////////////////////////////////////////////////
     /// UI -> Server
@@ -112,6 +112,11 @@ public:
      * @param friendID 好友ID
      */
     void open_chatform(QtId friendID);
+    /**
+     * @brief 关闭消息界面
+     * @param friendID 好友ID
+     */
+    void close_chatform(QtId friendID);
 
 private:
     bool is_signed = false; // 是否登录
@@ -120,6 +125,8 @@ private:
 //     static ClientAdapter* instance; 不做单例也行
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
     QHash<QtId, QString> qtid_to_nickname;
+
+    QHash<QtId, QList<Message>> qtid_to_msglist;
 
     RegisterForm* register_form = nullptr;
     SignInForm* sign_in_form = nullptr;
