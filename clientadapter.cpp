@@ -122,6 +122,11 @@ void ClientAdapter::make_register(QString nickname, QString pwd)
     handler->make_register_request(nickname, pwd);
 }
 
+void ClientAdapter::add_friend(QtId friendID)
+{
+
+}
+
 void ClientAdapter::open_chatform(QtId friendID)
 {
     if (qtid_to_chatform[friendID] == nullptr) {

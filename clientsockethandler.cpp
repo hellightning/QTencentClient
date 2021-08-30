@@ -1,6 +1,5 @@
 #include "clientsockethandler.h"
 #include "clientadapter.h"
-ClientSocketHandler* ClientSocketHandler::instance = nullptr;
 
 void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 {
@@ -9,7 +8,8 @@ void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 
 ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
-    tcp_socket->connectToHost("ip",1);
+    tcp_socket = new QTcpSocket();
+    tcp_socket->connectToHost("127.0.0.1" ,2333);
     connect(tcp_socket,SIGNAL(readyRead()),this,SLOT(slot_readyread()));
 }
 
