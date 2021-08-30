@@ -6,13 +6,14 @@
 struct message_list {
     int qtid;
     QString nickname;
-    QList<QString> message;
+    QList<QPair<int, QString>> message;
 };
 
 class IOHandler : QObject
 {
+    Q_OBJECT
 public:
-    IOHandler();
+    explicit IOHandler(QObject *parent = nullptr);
     friend QDataStream& operator<<(QDataStream& output, const message_list& lst);
     friend QDataStream& operator>>(QDataStream& input, message_list& lst);
     void serialize_storage(const message_list& lst);

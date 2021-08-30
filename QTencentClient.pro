@@ -1,4 +1,4 @@
-QT       += core gui network
+QT       += core gui network testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,8 +15,9 @@ SOURCES += \
     friendlistform.cpp \
     iohandler.cpp \
     main.cpp \
+    mytest.cpp \
     registerform.cpp \
-    signinform.cpp
+    signinform.cpp \
 
 HEADERS += \
     chatform.h \
@@ -24,6 +25,7 @@ HEADERS += \
     clientsockethandler.h \
     friendlistform.h \
     iohandler.h \
+    mytest.h \
     registerform.h \
     signinform.h
 

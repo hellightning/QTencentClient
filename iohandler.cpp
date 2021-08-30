@@ -2,13 +2,11 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QDataStream>
+#include <QDebug>
 
-QString PROJECT_STORAGE_DIR = QStandardPaths::writableLocation(QStandardPaths::HomeLocation).append("/data/");
+QString PROJECT_STORAGE_DIR = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/data/");
 
-IOHandler::IOHandler()
-{
 
-}
 
 QDataStream& operator<<(QDataStream& output, const message_list& lst) {
     output << lst.qtid << lst.nickname << lst.message;
@@ -20,6 +18,11 @@ QDataStream& operator>>(QDataStream& input, message_list& lst) {
     return input;
 }
 
+IOHandler::IOHandler(QObject *parent)  : QObject(parent)
+{
+
+}
+
 void IOHandler::serialize_storage(const message_list &lst)
 {
     QDir dir(PROJECT_STORAGE_DIR);
@@ -29,6 +32,8 @@ void IOHandler::serialize_storage(const message_list &lst)
     QString path = PROJECT_STORAGE_DIR + "user_" + lst.qtid + ".qnm";
     QFile file(path);
     file.open(QFile::WriteOnly | QFile::Truncate);
+//    qDebug() << path;
+    qDebug() << path;
     QDataStream out(&file);
     out << lst;
 }

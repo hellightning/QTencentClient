@@ -90,9 +90,9 @@ void ClientSocketHandler::slot_readyread(){
         while (p_databyte.at(num) != nullptr) {
             QByteArray mid = p_databyte.at(num);
             QtId id = mid.toInt();
-            QString nickname = p_databyte(num+1);
-            auto dui = std::make_tuple(id,nickname);
-            friends[count] = dui;
+//            QString nickname = p_databyte(num+1);
+//            auto dui = std::make_tuple(id,nickname);
+//            friends[count] = dui;
             count ++;
             num += 2;
         }
