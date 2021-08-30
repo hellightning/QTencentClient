@@ -59,6 +59,6 @@ void SignInForm::failed_sign(QString failedMsg) {
 
 void SignInForm::on_registerPushButton_clicked(){
     //需要跳转到注册界面
-    //adapter->jumpto_register_form();
+    adapter->open_register_form();
 }
 

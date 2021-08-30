@@ -16,6 +16,7 @@ private slots:
     //void test();
     void UItest();
     void test();
+    void adapterTest();
 
 };
 

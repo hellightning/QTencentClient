@@ -109,6 +109,13 @@ void ClientAdapter::send_message(QtId friendId, QString msg)
     qtid_to_msglist[friendId].append(std::make_tuple(cliend_id, msg));
 }
 
+void ClientAdapter::open_register_form()
+{
+    if (register_form == nullptr) {
+        register_form = new RegisterForm();
+    }
+}
+
 void ClientAdapter::sign_in(QtId userid, QString pwd)
 {
     auto handler = ClientSocketHandler::get_instance();

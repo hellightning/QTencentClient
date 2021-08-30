@@ -89,6 +89,10 @@ public:
      */
     void send_message(QtId friendId, QString msg);
     /**
+     * @brief 打开注册界面
+     */
+    void open_register_form();
+    /**
      * @brief 发送登录请求
      * @param userid 用户ID
      * @param pwd 密码
