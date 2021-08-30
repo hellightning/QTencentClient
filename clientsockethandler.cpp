@@ -1,5 +1,6 @@
 #include "clientsockethandler.h"
 #include "clientadapter.h"
+ClientSocketHandler* ClientSocketHandler::instance = nullptr;
 
 void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 {
@@ -8,48 +9,84 @@ void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 
 ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
-
+    tcp_socket->connectToHost("ip",1);
 }
 /* clientadapter调用函数部分
  * 发送消息到server端
  */
 void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
-
+    QByteArray message;
+    QDataStream message_stream(&message,QIODevice::WriteOnly);
+    message_stream << "SEND_MESSAGE";
+    message_stream << std::get<0>(author);
+    message_stream << std::get<0>(msg);
+    message_stream << std::get<1>(msg);
+    tcp_socket->write(message);
 }
+/*
+ *  发送 发送消息请求，参数为发送者id，接收者id，消息本体
+ */
 
 void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
-
+    QByteArray message;
+    QDataStream message_stream(&message,QIODevice::WriteOnly);
+    message_stream << "SIGN_IN";
+    message_stream << userid;
+    message_stream << pwd;
+    tcp_socket->write(message);
 }
-
+/*
+ *  发送 登录请求，参数为用户id，密码
+ */
 void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
-
+    QByteArray message;
+    QDataStream message_stream(&message,QIODevice::WriteOnly);
+    message_stream << "REGISTER";
+    message_stream << nickname;
+    message_stream << pwd;
+    tcp_socket->write(message);
 }
+/*
+ *  发送 注册请求，参数为用户昵称，密码
+ */
 
 void ClientSocketHandler::make_get_friends_request(QtId userid){
-
+    QByteArray message;
+    QDataStream message_stream(&message,QIODevice::WriteOnly);
+    message_stream << "GET_FRIEND_LIST";
+    message_stream << userid;
+    tcp_socket->write(message);
 }
+/*
+ *  发送 获取好友列表请求，参数为用户id
+ */
 
 void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
-
+    QByteArray message;
+    QDataStream message_stream(&message,QIODevice::WriteOnly);
+    message_stream << "ADD_FRIEND";
+    message_stream << userid;
+    message_stream << friendid;
+    tcp_socket->write(message);
 }
+/*
+ *  发送 添加好友请求，参数为请求者id，好友id
+ */
 
 /* 接收server端消息
  * 调用对应adaper函数
  */
 
-QList<QByteArray> ClientSocketHandler::parse_message(QByteArray msg){
-    return msg.split('\n');
-}
-
-
 void ClientSocketHandler::slot_readyread(){
-    QByteArray databyte = tcp_socket->readAll();
-    QList<QByteArray> p_databyte = parse_message(databyte);
-    QString tmp_message = p_databyte.at(0);
+    QByteArray message;
+    tcp_socket->read(message);
+    QDataStream message_stream(&message, QIODevice::ReadOnly);
+    QByteArray tmp_message;
+    message_stream >> tmp_message;
     if(tmp_message == "REGISTER_SUCCEED"){
         Status stat = SUCCESS;
-        QByteArray mid = p_databyte.at(1);
-        QtId id = mid.toInt();
+        QtId id;
+        message_stream >> id;
         QString msg = "";
         adapter->update_register_status(stat,id,msg);
     }
@@ -67,7 +104,8 @@ void ClientSocketHandler::slot_readyread(){
       */
     if(tmp_message == "SIGN_IN_SECCEED"){
         Status stat = SUCCESS;
-        QString nickname = p_databyte.at(1);
+        QString nickname;
+        message_stream >> nickname;
         QString msg = "";
         adapter->update_sign_status(stat,nickname,msg);
     }
@@ -76,7 +114,8 @@ void ClientSocketHandler::slot_readyread(){
       */
     if(tmp_message == "SIGN_IN_FAILED"){
         Status stat = FAILED;
-        QString nickname = p_databyte.at(1);
+        QString nickname;
+        message_stream >> nickname;
         QString msg = "sign command error!\n please sign later :)";
         adapter-> update_sign_status(stat,nickname,msg);
     }
@@ -86,15 +125,14 @@ void ClientSocketHandler::slot_readyread(){
     if(tmp_message == "FRIEND_LIST"){
         Status stat = SUCCESS;
         QList<std::tuple<QtId,QString>> friends;
-        int num = 1,count = 0;
-        while (p_databyte.at(num) != nullptr) {
-            QByteArray mid = p_databyte.at(num);
-            QtId id = mid.toInt();
-            QString nickname = p_databyte(num+1);
+        QString nickname;
+        QtId id;
+        int count = 0;
+        while ((message_stream >> id) != nullptr) {
+            message_stream >> nickname;
             auto dui = std::make_tuple(id,nickname);
             friends[count] = dui;
             count ++;
-            num += 2;
         }
         QString msg = "";
         if(count != 0){
@@ -116,9 +154,10 @@ void ClientSocketHandler::slot_readyread(){
     if(tmp_message == "ADD_FRIEND_SUCCEED"){
         Status stat = SUCCESS;
         std::tuple<QtId, QString> mFriend;
-        QByteArray mid = p_databyte.at(1);
-        QtId id = mid.toInt();
-        QString nickname = "";
+        QtId id;
+        message_stream >> id;
+        QString nickname;
+        message_stream >> nickname;
         mFriend = std::make_tuple(id,nickname);
         QString msg = "";
         adapter->update_add_friend_status(stat,mFriend,msg);
@@ -139,15 +178,16 @@ void ClientSocketHandler::slot_readyread(){
     if(tmp_message == "SEND_MESSAGE"){
         Status stat = SUCCESS;
         Message message;
-        QByteArray mid = p_databyte.at(2);
-        QtId id = mid.toInt();
-        int num = 3,count = 0;
-        while (p_databyte.at(num) != nullptr) {
-            QString transport = p_databyte.at(num);
-            auto dui = std::tuple(id,transport);
+        QtId from_id;
+        message_stream >> from_id;
+        QtId to_id;
+        message_stream >> to_id;
+        int count = 0;
+        QString transport;
+        while ((message_stream >> transport) != nullptr) {
+            auto dui = std::tuple(from_id,transport);
             message[count] = dui;
             count ++;
-            num ++;
         }
         QString msg = "";
         adapter->update_receive_message_status(stat,message,msg);
