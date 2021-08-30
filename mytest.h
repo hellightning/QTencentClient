@@ -15,6 +15,8 @@ signals:
 private slots:
     //void test();
     void UItest();
+    void test();
+
 };
 
 #endif // MYTEST_H
