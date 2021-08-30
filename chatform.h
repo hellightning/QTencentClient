@@ -7,7 +7,7 @@ class ClientAdapter;
 
 typedef int QtId;
 // QtId: 发送者ID，QString 发送者昵称，QString 消息体
-typedef std::tuple<QtId, QString> Message;
+typedef std::tuple<QtId, QString> SMessage;
 namespace Ui {
 class ChatForm;
 }
@@ -27,8 +27,8 @@ private slots:
 
 private:
     Ui::ChatForm *ui;
-    void init_list_widget(QList<Message>);
-    void update_list_widget(Message);
+    void init_list_widget(QList<SMessage>);
+    void update_list_widget(SMessage);
 };
 
 #endif // CHATFORM_H

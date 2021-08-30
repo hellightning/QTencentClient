@@ -82,7 +82,7 @@ void ClientAdapter::update_add_friend_status(Status stat, std::tuple<QtId, QStri
 */
 }
 
-void ClientAdapter::update_receive_message_status(Status stat, QList<Message> msg, QString errmsg)
+void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> msg, QString errmsg)
 {
     for (auto& val : msg) {
         auto& [id, msg_item] = val;
@@ -119,8 +119,7 @@ void ClientAdapter::sign_in(QtId userid, QString pwd)
 void ClientAdapter::make_register(QString nickname, QString pwd)
 {
     auto handler = ClientSocketHandler::get_instance();
-    auto handler = ClientSocketHandler::get_instance();
-    handler->make_add_friend_request(cliend_id, friendID);
+    handler->make_register_request(nickname, pwd);
 }
 
 void ClientAdapter::open_chatform(QtId friendID)
@@ -130,7 +129,7 @@ void ClientAdapter::open_chatform(QtId friendID)
         auto res = io_handler->unserialize_storage(friendID);
         auto nick = qtid_to_nickname[friendID];
         if (res.qtid != -1) {
-            QList<Message> lst;
+            QList<SMessage> lst;
             foreach(auto& v, res.message)
                 lst.append(std::make_tuple(friendID, v));
 //            qtid_to_chatform[friendID]->init_list_widget(lst);

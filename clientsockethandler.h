@@ -8,7 +8,8 @@ class ClientAdapter;
 
 typedef int QtId;
 typedef std::tuple<QtId, QString> User;
-typedef std::tuple<QtId, QString, QString> Message;
+typedef QList<std::tuple<QtId, QString>> Message;
+typedef std::tuple<QtId, QString> SMessage;
 
 class ClientSocketHandler : public QObject
 {
@@ -21,7 +22,7 @@ public:
      * @param author 消息发送者
      * @param msg 消息本体
      */
-    void make_send_message_request(User author, Message msg);
+    void make_send_message_request(User author, SMessage msg);
     /**
      * @brief 发送登录请求
      * @param userid 用户ID
@@ -47,10 +48,18 @@ public:
     void make_add_friend_request(QtId userid, QtId friendid);
 
 private:
+    QList<QByteArray> parse_message(QByteArray msg);
+
+private:
     explicit ClientSocketHandler(QObject *parent = nullptr);
     static ClientSocketHandler* instance;
     QTcpSocket* tcp_socket;
     ClientAdapter* adapter;
+private slots:
+    /**
+      * 接收消息的槽
+      */
+    void slot_readyread();
 signals:
 };
 

@@ -76,7 +76,7 @@ public:
      * @param msg 消息
      * @param errmsg 错误信息
      */
-    void update_receive_message_status(Status stat, QList<Message> msg, QString errmsg);
+    void update_receive_message_status(Status stat, QList<SMessage> msg, QString errmsg);
 
     ///////////////////////////////////////////////////
     /// UI -> Server
@@ -126,7 +126,7 @@ private:
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
     QHash<QtId, QString> qtid_to_nickname;
 
-    QHash<QtId, QList<Message>> qtid_to_msglist;
+    QHash<QtId, QList<SMessage>> qtid_to_msglist;
 
     RegisterForm* register_form = nullptr;
     SignInForm* sign_in_form = nullptr;

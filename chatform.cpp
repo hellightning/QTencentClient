@@ -25,12 +25,12 @@ void ChatForm::on_closeFormButton_clicked()
 
 }
 
-void ChatForm::init_list_widget(QList<Message>)
+void ChatForm::init_list_widget(QList<SMessage>)
 {
 
 }
 
-void ChatForm::update_list_widget(Message)
+void ChatForm::update_list_widget(SMessage)
 {
 
 }
