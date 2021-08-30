@@ -25,6 +25,7 @@ void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
         }
         if (sign_in_form != nullptr) {
             sign_in_form->set_qtid(id);
+            qDebug() << id;
         }
     } else {
         if (register_form != nullptr) {
@@ -44,6 +45,7 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
         friend_list_form = new FriendListForm();
         friend_list_form->set_qtid(cliend_id);
         friend_list_form->set_nickname(nickname);
+        friend_list_form->show();
         auto handler = ClientSocketHandler::get_instance();
         handler->make_get_friends_request(cliend_id);
     } else {
@@ -113,6 +115,8 @@ void ClientAdapter::open_register_form()
 {
     if (register_form == nullptr) {
         register_form = new RegisterForm();
+        register_form->show();
+        register_form->set_adapter(this);
     }
 }
 

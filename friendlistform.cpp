@@ -28,7 +28,7 @@ int FriendListForm::getSize() {
 }
 
 void FriendListForm::set_qtid(QtId id) {
-    ui ->qtIdLabel ->setText(QString(id));
+    ui ->qtIdLabel ->setText(QString("%1").arg(id));
 }
 
 void FriendListForm::set_nickname(QString nick) {

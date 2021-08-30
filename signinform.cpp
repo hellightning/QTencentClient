@@ -25,7 +25,7 @@ QtId SignInForm::get_qtid() {
 
 //更改ui界面上的登录账号
 void SignInForm::set_qtid(QtId id) {
-    ui ->qidTextEdit ->setText(QString(id));
+    ui ->qidTextEdit ->setText(QString("%1").arg(id));
 }
 
 QString SignInForm::get_password() {
