@@ -1,6 +1,6 @@
 #include "clientsockethandler.h"
 #include "clientadapter.h"
-
+#include <QHostAddress>
 void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 {
     adapter = _adapter;
@@ -9,8 +9,12 @@ void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
     tcp_socket = new QTcpSocket();
-    tcp_socket->connectToHost("127.0.0.1" ,2333);
-    connect(tcp_socket,SIGNAL(readyRead()),this,SLOT(slot_readyread()));
+    QHostAddress hostaddr;
+    hostaddr.setAddress("127.0.0.1");
+    tcp_socket->connectToHost(hostaddr ,2333);
+    tcp_socket->waitForConnected(1000);
+    connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
+
 }
 
 
@@ -32,12 +36,15 @@ void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
  */
 
 void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
+    qDebug() << "making sign request";
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
     message_stream << "SIGN_IN";
     message_stream << userid;
     message_stream << pwd;
     tcp_socket->write(message);
+    tcp_socket->flush();
+    qDebug() << "message SENT.";
 }
 /*
  *  发送 登录请求，参数为用户id，密码
@@ -48,6 +55,7 @@ void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
     message_stream << "REGISTER";
     message_stream << nickname;
     message_stream << pwd;
+    qDebug() << message;
     tcp_socket->write(message);
 }
 /*
@@ -86,11 +94,15 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
  */
 
 void ClientSocketHandler::slot_readyread(){
+    qDebug() << "here";
     QByteArray message = tcp_socket->readAll();
     QDataStream message_stream(&message, QIODevice::ReadOnly);
     QByteArray tmp_message;
     message_stream >> tmp_message;
-    if(tmp_message == "REGISTER_SUCCEED"){
+    tmp_message = tmp_message.trimmed();
+    qDebug() << tmp_message;
+    if(tmp_message.startsWith("REGISTER_SUCCEED")){
+        qDebug() << "register succeed";
         Status stat = SUCCESS;
         QtId id;
         message_stream >> id;
@@ -100,7 +112,8 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为注册成功，返回注册状态及用户id
       */
-    if(tmp_message == "RESGISTER_FAILED"){
+    if(tmp_message.startsWith("RESGISTER_FAILED")){
+        qDebug() << "register failed";
         Status stat = FAILED;
         QtId id = -1;
         QString msg = "register command error!\n please register later :)";
@@ -109,7 +122,7 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为注册失败，返回注册状态及失败消息
       */
-    if(tmp_message == "SIGN_IN_SECCEED"){
+    if(tmp_message.startsWith("SIGN_IN_SECCEED")){
         Status stat = SUCCESS;
         QString nickname;
         message_stream >> nickname;
@@ -119,7 +132,7 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为登录成功，返回登录状态及用户昵称
       */
-    if(tmp_message == "SIGN_IN_FAILED"){
+    if(tmp_message.startsWith("SIGN_IN_FAILED")){
         Status stat = FAILED;
         QString nickname;
         message_stream >> nickname;
@@ -129,7 +142,7 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为登录失败，返回登录状态、用户昵称及失败消息
       */
-    if(tmp_message == "FRIEND_LIST"){
+    if(tmp_message.startsWith("FRIEND_LIST")){
         Status stat = SUCCESS;
         QList<std::tuple<QtId,QString>> friends;
         QString nickname;
@@ -160,7 +173,7 @@ void ClientSocketHandler::slot_readyread(){
       * 若好友列表不为空，则返回状态为成功，并返回好友列表
       * 若好友列表为空，则返回状态为失败，并返回失败消息
       */
-    if(tmp_message == "ADD_FRIEND_SUCCEED"){
+    if(tmp_message.startsWith("ADD_FRIEND_SUCCEED")){
         Status stat = SUCCESS;
         std::tuple<QtId, QString> mFriend;
         QtId id;
@@ -174,7 +187,7 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为添加好友，返回状态为成功，并返回好友id及昵称
       */
-    if(tmp_message == "ADD_FRIEND_FAILED"){
+    if(tmp_message.startsWith("ADD_FRIEND_FAILED")){
         Status stat = FAILED;
         std::tuple<QtId, QString> mFriend;
         mFriend = std::make_tuple(-1, "");
@@ -184,24 +197,23 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为添加好友，返回状态为失败，并返回失败消息
       */
-    if(tmp_message == "SEND_MESSAGE"){
+    if(tmp_message.startsWith("SEND_MESSAGE")){
         Status stat = SUCCESS;
         Message message;
         QtId from_id;
         message_stream >> from_id;
         QtId to_id;
         message_stream >> to_id;
-        int count = 0;
         QString transport;
         message_stream >> transport;
+        qDebug() << from_id << to_id << transport;
         while (transport != nullptr) {
             auto dui = std::make_tuple(from_id,transport);
-            message[count] = dui;
-            count ++;
+            message.append(dui);
             message_stream >> transport;
         }
         QString msg = "";
-        adapter->update_receive_message_status(stat,message,msg);
+//        adapter->update_receive_message_status(stat,message,msg);
     }
     /**
       * 接收消息识别为收到消息，返回状态为成功，并返回好友id及消息本体

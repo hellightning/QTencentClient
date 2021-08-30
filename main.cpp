@@ -17,5 +17,6 @@ QTEST_MAIN(mytest);
 //    //RegisterForm w;
 //    //w.show();
 //    ClientAdapter adapter;
+
 //    return a.exec();
 //}
