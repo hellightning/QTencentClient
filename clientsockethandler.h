@@ -48,9 +48,6 @@ public:
     void make_add_friend_request(QtId userid, QtId friendid);
 
 private:
-    QList<QByteArray> parse_message(QByteArray msg);
-
-private:
     explicit ClientSocketHandler(QObject *parent = nullptr);
     static ClientSocketHandler* instance;
     QTcpSocket* tcp_socket;
