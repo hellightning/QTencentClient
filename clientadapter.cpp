@@ -62,9 +62,9 @@ void ClientAdapter::update_friend_list_status(Status stat, QList<std::tuple<QtId
             auto& [id, nname] = frd;
             qtid_to_nickname[id] = nname;
         }
-//        friend_list_form->set_friend_list(friends);
+        friend_list_form->set_friend_list(friends);
     } else {
-//        friend_list_form->show_error(msg);
+        friend_list_form->show_error(errmsg);
     }
 
 }
