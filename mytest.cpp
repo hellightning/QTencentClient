@@ -3,6 +3,7 @@
 #include <clientsockethandler.h>
 #include <future>
 #include <QWaitCondition>
+#include "friendlistform.h"
 #include <QTest>
 #include <QtTest/QTest>
 
@@ -34,6 +35,7 @@ void mytest::UItest()
     qDebug() << w.getSize() << endl;
 
     QTest::qWait(10000);
+}
 void mytest::test()
 {
     ClientAdapter adapter;
@@ -41,4 +43,33 @@ void mytest::test()
     QTest::qWait(2000);
     adapter.send_message(10, "hello self");
     QTest::qWait(2000);
+}
+
+void mytest::adapterTest()
+{
+    ClientAdapter adapter;
+    QTest::qWait(1000);
+    adapter.update_register_status(SUCCESS, 5, "");
+    QTest::qWait(1000);
+//    adapter.update_register_status(FAILED, -1, "233");
+//    QTest::qWait(1000);
+//    adapter.update_sign_status(SUCCESS, "qwq", "");
+//    QTest::qWait(1000);
+//    adapter.update_sign_status(FAILED, "qwq", "qwq");
+//    QTest::qWait(1000);
+//    QList<std::tuple<QtId, QString>> friends;
+//    friends.append(std::make_tuple(2, "hhq"));
+//    friends.append(std::make_tuple(3, "hhh"));
+//    friends.append(std::make_tuple(10, "emm"));
+//    adapter.update_friend_list_status(SUCCESS, friends, "");
+//    QTest::qWait(1000);
+//    adapter.update_friend_list_status(FAILED, friends, "233");
+//    QTest::qWait(1000);
+//    Message msg;
+//    msg << std::make_tuple(5, "czx")
+//        << std::make_tuple(10, "2ce");
+//    adapter.update_receive_message_status(SUCCESS, msg, "");
+//    QTest::qWait(1000);
+//    adapter.update_receive_message_status(FAILED, msg, "233");
+
 }

@@ -213,7 +213,7 @@ void ClientSocketHandler::slot_readyread(){
             message_stream >> transport;
         }
         QString msg = "";
-//        adapter->update_receive_message_status(stat,message,msg);
+        adapter->update_receive_message_status(stat,message,msg);
     }
     /**
       * 接收消息识别为收到消息，返回状态为成功，并返回好友id及消息本体
