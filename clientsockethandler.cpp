@@ -11,7 +11,7 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
     tcp_socket = new QTcpSocket();
     QHostAddress hostaddr;
     hostaddr.setAddress("192.168.43.9");
-    tcp_socket->connectToHost(hostaddr ,11451);
+    tcp_socket->connectToHost(QHostAddress("192.168.43.9") ,11451);
     tcp_socket->waitForConnected(1000);
     connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
 }
@@ -196,7 +196,7 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为注册失败，返回注册状态及失败消息
       */
-    if(tmp_message.startsWith("SIGN_IN_SECCEED")){
+    if(tmp_message.startsWith("SIGN_IN_SUCCEED")){
         Status stat = SUCCESS;
         QString nickname;
         message_stream >> nickname;

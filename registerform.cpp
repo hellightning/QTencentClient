@@ -66,10 +66,10 @@ void RegisterForm::show_alert(QString warningMsg) {
 }
 
 void RegisterForm::failed_msg(QString str) {
-    show_alert("注册失败" + str);
+    show_alert(QString("注册失败%1").arg(str));
 }
 
 void RegisterForm::show_qtid(QtId id) {
-    show_alert(QString(id));
+    show_alert(QString("%1").arg(id));
 }
 

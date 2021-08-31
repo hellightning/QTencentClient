@@ -9,7 +9,7 @@
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
     sign_in_form = new SignInForm();
-    //sign_in_form->show();
+    sign_in_form->show();
     sign_in_form->set_adapter(this);
 
     io_handler = new IOHandler();
@@ -40,11 +40,13 @@ void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
 
 void ClientAdapter::update_sign_status(Status stat, QString nickname, QString errmsg)
 {
+    qDebug() << stat << " " << nickname;
     if (stat == SUCCESS) {
         if (sign_in_form != nullptr) {
             delete sign_in_form;
         }
         this->nick_name = nickname;
+        qtid_to_nickname[cliend_id] = nickname;
         friend_list_form = new FriendListForm();
         friend_list_form->set_qtid(cliend_id);
         friend_list_form->set_nickname(nickname);
@@ -61,12 +63,12 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
 
 void ClientAdapter::update_friend_list_status(Status stat, QList<std::tuple<QtId, QString> > friends, QString errmsg)
 {
-
     if (stat == SUCCESS) {
         foreach (auto& frd, friends) {
             auto& [id, nname] = frd;
             qtid_to_nickname[id] = nname;
         }
+        friends.append(std::make_tuple(cliend_id, nick_name));
         friend_list_form->set_friend_list(friends);
     } else {
         friend_list_form->show_error(errmsg);
