@@ -7,6 +7,7 @@ ChatForm::ChatForm(QWidget *parent) :
     ui(new Ui::ChatForm)
 {
     ui->setupUi(this);
+    //ui->MsgBoard->setViewMode(QListView::viewMode(QListView::ViewMode));
 }
 
 ChatForm::~ChatForm() {
@@ -45,26 +46,23 @@ void ChatForm::update_list_widget(SMessage currentMsg) {
     QtId qid = std::get<0>(currentMsg);
     QString msg = std::get<1>(currentMsg);
 
-    if(qid == adapter->cliend_id) {
-        //TODO 自己发送的信息
-        add_item_to_ui(adapter->qtid_to_nickname[qid],msg);
-    } else {
-        //对方发送的信息
-        add_item_to_ui(adapter->qtid_to_nickname[qid],msg);
-    }
+    add_item_to_ui(adapter->qtid_to_nickname[qid],msg,qid == adapter->cliend_id);
+
 }
 
-void ChatForm::add_item_to_ui(QString nickName, QString realMsg) {
+
+void ChatForm::add_item_to_ui(QString nickName, QString realMsg,bool isMySelf) {
       MyMsgItem* pItemWidget = new MyMsgItem(this);
-//    //连接信号槽
+
       pItemWidget->setData(nickName, realMsg);
-      pItemWidget -> setRight();
       QListWidgetItem* pItem = new QListWidgetItem();
 
-//    //手动调整自定义Item大小
-      pItem -> setSizeHint(QSize(400,pItemWidget->getHeight()+40));
+//    手动调整自定义Item大小
+      pItemWidget ->setPosRight(isMySelf);
+      pItem -> setSizeHint(QSize(700,pItemWidget->getHeight()+30));
+//    不能换顺序
 
-//    //连接自定义控件
+//    连接自定义控件
       ui->MsgBoard->addItem(pItem);
       ui->MsgBoard->setItemWidget(pItem, pItemWidget);
 }
