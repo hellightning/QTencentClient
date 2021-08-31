@@ -18,6 +18,7 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 
 
 
+
 /* clientadapter调用函数部分
  * 发送消息到server端
  */
@@ -28,6 +29,15 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
  * @param msg   消息对象id及消息
  */
 void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
+    auto check = tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+        QList<SMessage> message;
+        message.clear();
+        QString msg = "add friend command error!\n please add later :)";
+        adapter->update_receive_message_status(stat,message,msg);
+    }
+    else{
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
     message_stream << "SEND_MESSAGE";
@@ -35,6 +45,7 @@ void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
     message_stream << std::get<0>(msg);
     message_stream << std::get<1>(msg);
     tcp_socket->write(message);
+    }
 }
 /*
  *  发送 发送消息请求，参数为发送者id，接收者id，消息本体
@@ -46,6 +57,14 @@ void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
  * @param pwd   密码
  */
 void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
+    auto check = tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+        QString nickname = "";
+        QString msg = "sign command error!\n please sign later :)";
+        adapter-> update_sign_status(stat,nickname,msg);
+    }
+    else{
     qDebug() << "making sign request";
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
@@ -55,6 +74,7 @@ void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
     tcp_socket->write(message);
     tcp_socket->flush();
     qDebug() << "message SENT.";
+    }
 }
 /*
  *  发送 登录请求，参数为用户id，密码
@@ -65,6 +85,14 @@ void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
  * @param pwd   密码
  */
 void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
+    auto check = tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+        QtId id = -1;
+        QString msg = "register command error!\n please register later :)";
+        adapter->update_register_status(stat,id,msg);
+    }
+    else{
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
     message_stream << "REGISTER";
@@ -72,6 +100,7 @@ void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
     message_stream << pwd;
     qDebug() << message;
     tcp_socket->write(message);
+    }
 }
 /*
  *  发送 注册请求，参数为用户昵称，密码
@@ -81,11 +110,21 @@ void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
  * @param userid    请求者id
  */
 void ClientSocketHandler::make_get_friends_request(QtId userid){
+    auto check = tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+        QList<std::tuple<QtId,QString>> friends;
+        friends.clear();
+        QString msg = "get friend list command error!\n please get later :)";
+        adapter-> update_friend_list_status(stat,friends,msg);
+    }
+    else{
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
     message_stream << "GET_FRIEND_LIST";
     message_stream << userid;
     tcp_socket->write(message);
+    }
 }
 /*
  *  发送 获取好友列表请求，参数为用户id
@@ -96,12 +135,23 @@ void ClientSocketHandler::make_get_friends_request(QtId userid){
  * @param friendid  添加对象id
  */
 void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
+    auto check = tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+        std::tuple<QtId, QString> mFriend;
+        mFriend = std::make_tuple(-1, "");
+        QString msg = "add friend command error!\n please add later :)";
+        adapter-> update_add_friend_status(stat,mFriend,msg);
+
+    }
+    else{
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
     message_stream << "ADD_FRIEND";
     message_stream << userid;
     message_stream << friendid;
     tcp_socket->write(message);
+    }
 }
 /*
  *  发送 添加好友请求，参数为请求者id，好友id
