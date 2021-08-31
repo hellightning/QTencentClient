@@ -105,5 +105,8 @@ void FriendListForm::set_adapter(ClientAdapter *cli) {
 
 void FriendListForm::on_floatActionButton_clicked() {
     //TO DO 添加好友查找好友
+    if(!(ui ->friendListEdit->toPlainText().isEmpty())) {
+        adapter ->add_friend(ui -> friendListEdit ->toPlainText().toInt());
+    }
 }
 
