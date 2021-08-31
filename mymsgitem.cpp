@@ -23,11 +23,17 @@ void MyMsgItem::setData(QString nickName, QString msg)
     ui -> MsgBoard->setAlignment(Qt::AlignTop);
     ui -> MsgBoard->setWordWrap(true);
     ui -> MsgBoard->adjustSize();
+    ui -> MsgBoard -> setAlignment(Qt::AlignRight);
 
 }
 
 int MyMsgItem::getHeight()
 {
-    return ui ->MsgBoard ->height()+ (ui ->nickName ->height());
+    return ui -> MsgBoard ->height() + (ui ->nickName ->height());
+}
+
+void MyMsgItem::setRight()
+{
+
 }
 

@@ -29,7 +29,8 @@ private:
     Ui::RegisterForm *ui;
     ClientAdapter *adapter;
     bool check_password();
-    void show_alert(QString Msg);
+    void show_alert_fail(QString warningMsg);
+    void show_alert_succ(QString Msg);
 };
 
 #endif // REGISTERFORM_H
