@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListWidget" name="listWidget">
+  <widget class="QListWidget" name="MsgBoard">
    <property name="geometry">
     <rect>
      <x>25</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QTextEdit" name="textEdit">
+  <widget class="QTextEdit" name="typeBoard">
    <property name="geometry">
     <rect>
      <x>33</x>
@@ -36,27 +36,27 @@
   <widget class="QPushButton" name="sendMessageButton">
    <property name="geometry">
     <rect>
-     <x>752</x>
-     <y>507</y>
+     <x>740</x>
+     <y>540</y>
      <width>151</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>发送</string>
    </property>
   </widget>
   <widget class="QPushButton" name="closeFormButton">
    <property name="geometry">
     <rect>
-     <x>750</x>
-     <y>570</y>
+     <x>760</x>
+     <y>20</y>
      <width>151</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string> 关闭</string>
    </property>
   </widget>
  </widget>

@@ -17,6 +17,7 @@ SOURCES += \
     itemwidget.cpp \
     loginwindow.cpp \
     main.cpp \
+    mymsgitem.cpp \
     mytest.cpp \
     qlabel_doubleclick.cpp \
     registerform.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     iohandler.h \
     itemwidget.h \
     loginwindow.h \
+    mymsgitem.h \
     mytest.h \
     qlabel_doubleclick.h \
     registerform.h \
@@ -40,6 +42,7 @@ FORMS += \
     friendlistform.ui \
     itemwidget.ui \
     loginwindow.ui \
+    mymsgitem.ui \
     registerform.ui \
     signinform.ui
 

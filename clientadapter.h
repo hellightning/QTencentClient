@@ -122,19 +122,23 @@ public:
      */
     void close_chatform(QtId friendID);
 
-private:
-    bool is_signed = false; // 是否登录
+public:
     QtId cliend_id = 114514; // 客户端id
-    QString nick_name;
-//     static ClientAdapter* instance; 不做单例也行
     QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
     QHash<QtId, QString> qtid_to_nickname;
+    FriendListForm* friend_list_form = nullptr;
+
+private:
+    bool is_signed = false; // 是否登录
+    QString nick_name;
+//     static ClientAdapter* instance; 不做单例也行
+
 
     QHash<QtId, QList<SMessage>> qtid_to_msglist;
 
     RegisterForm* register_form = nullptr;
     SignInForm* sign_in_form = nullptr;
-    FriendListForm* friend_list_form = nullptr;
+
     IOHandler* io_handler = nullptr;
 signals:
 
