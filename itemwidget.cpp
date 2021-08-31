@@ -9,7 +9,7 @@ MyItemWidget::MyItemWidget(QWidget *parent) :
 {
     ui -> setupUi(this);
     ui -> hasMsg ->setVisible(false);
-    connect(ui->backDec,SIGNAL(setQlabel()),this,SLOT(setNoneMsg()));
+    connect(ui->backDec,SIGNAL(setQlabel()),this,SLOT(item_on_double_clicked()));
 
 }
 
@@ -42,7 +42,16 @@ void MyItemWidget::setHasMsg() {
     ui -> hasMsg -> setVisible(true);
 }
 
+void MyItemWidget::clearMsgIcon() {
+    setNoneMsg();
+}
+
 void MyItemWidget::setNoneMsg() {
     ui -> hasMsg -> setVisible(false);
 
+}
+
+void MyItemWidget::item_on_double_clicked() {
+    setNoneMsg();
+    emit double_cliceked_to_friendsform(this);
 }

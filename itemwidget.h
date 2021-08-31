@@ -25,10 +25,13 @@ public:
     int getQid();
     QString getNickName();
     void setHasMsg();
+    void clearMsgIcon();
 
 private slots:
     void setNoneMsg();
-
+    void item_on_double_clicked();
+signals:
+    void double_cliceked_to_friendsform(MyItemWidget*);
 
 private:
     Ui::ItemWidget *ui;

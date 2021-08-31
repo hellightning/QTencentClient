@@ -9,6 +9,6 @@ qlabel_doubleclick::~qlabel_doubleclick(){}
 
 #include<QDebug>
 void qlabel_doubleclick::mouseDoubleClickEvent(QMouseEvent *event){
-    qDebug() << "nm?";
+    //qDebug() << "nm?";
     emit setQlabel();
 }

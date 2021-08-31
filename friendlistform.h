@@ -27,10 +27,11 @@ public:
     void show_error(QString);
     //void add_Item_toUI(QString,int);
     void add_friend(std::tuple<QtId, QString>);
+    void set_adapter(ClientAdapter*);
     int getSize();
 
 private slots:
-    void on_friendListWidget_itemDoubleClicked(QListWidgetItem *item);
+    void on_friendListWidget_itemDoubleClicked(MyItemWidget*);
     void on_floatActionButton_clicked();
 
 private:
@@ -39,6 +40,7 @@ private:
 
 private:
     Ui::FriendListForm *ui;
+    ClientAdapter *adapter;
 };
 
 #endif // FRIENDLISTFORM_H

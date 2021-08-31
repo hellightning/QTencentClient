@@ -9,7 +9,7 @@
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
     sign_in_form = new SignInForm();
-    sign_in_form->show();
+    //sign_in_form->show();
     sign_in_form->set_adapter(this);
 
     io_handler = new IOHandler();
@@ -80,9 +80,9 @@ void ClientAdapter::update_add_friend_status(Status stat, std::tuple<QtId, QStri
     if (stat == SUCCESS) {
         auto& [id, nname] = mFriend;
         qtid_to_nickname[id] = nname;
-//        friend_list_form->add_friend(mFriend);
+        friend_list_form->add_friend(mFriend);
     } else {
-//        friend_list_form->show_error(msg);
+        friend_list_form->show_error(errmsg);
     }
 
 }
@@ -155,7 +155,7 @@ void ClientAdapter::open_chatform(QtId friendID)
                 foreach(auto& v, res.message) {
                     lst.append(std::make_tuple(v.first, v.second));
                 }
-    //            qtid_to_chatform[friendID]->init_list_widget(lst);
+                qtid_to_chatform[friendID]->init_list_widget(friendID,lst);
             }
             qDebug() << "open" << res.qtid << " " << qtid_to_msglist[res.qtid].size();
             lst.append(qtid_to_msglist[res.qtid]);

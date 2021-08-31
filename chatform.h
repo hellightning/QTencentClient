@@ -2,6 +2,7 @@
 #define CHATFORM_H
 
 #include <QWidget>
+#include "mymsgitem.h"
 
 class ClientAdapter;
 
@@ -20,15 +21,20 @@ public:
     explicit ChatForm(QWidget *parent = nullptr);
     ~ChatForm();
 
+    void set_adapter(ClientAdapter*);
+    void init_list_widget(QtId,QList<SMessage>);
+    void update_list_widget(SMessage);
+
 private slots:
     void on_sendMessageButton_clicked();
-
     void on_closeFormButton_clicked();
 
 private:
     Ui::ChatForm *ui;
-    void init_list_widget(QList<SMessage>);
-    void update_list_widget(SMessage);
+    ClientAdapter* adapter;
+
+
+    void add_item_to_ui(QString,QString);
 };
 
 #endif // CHATFORM_H
