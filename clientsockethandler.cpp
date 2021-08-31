@@ -22,6 +22,12 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 /* clientadapter调用函数部分
  * 发送消息到server端
  */
+
+/**
+ * @brief make_send_message_request 发送"发送消息请求"
+ * @param author    请求者id及昵称
+ * @param msg   消息对象id及消息
+ */
 void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
@@ -35,6 +41,11 @@ void ClientSocketHandler::make_send_message_request(User author, SMessage msg){
  *  发送 发送消息请求，参数为发送者id，接收者id，消息本体
  */
 
+/**
+ * @brief make_sign_request 发送"登录请求"
+ * @param userid    请求者id
+ * @param pwd   密码
+ */
 void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
     qDebug() << "making sign request";
     QByteArray message;
@@ -49,6 +60,11 @@ void ClientSocketHandler::make_sign_request(QtId userid, QString pwd){
 /*
  *  发送 登录请求，参数为用户id，密码
  */
+/**
+ * @brief make_register_request 发送"注册请求"
+ * @param nickname  请求者昵称
+ * @param pwd   密码
+ */
 void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
@@ -61,7 +77,10 @@ void ClientSocketHandler::make_register_request(QString nickname, QString pwd){
 /*
  *  发送 注册请求，参数为用户昵称，密码
  */
-
+/**
+ * @brief make_get_friends_request  发送"获取好友列表请求"
+ * @param userid    请求者id
+ */
 void ClientSocketHandler::make_get_friends_request(QtId userid){
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
@@ -72,7 +91,11 @@ void ClientSocketHandler::make_get_friends_request(QtId userid){
 /*
  *  发送 获取好友列表请求，参数为用户id
  */
-
+/**
+ * @brief make_add_friend_request   发送"添加好友请求"
+ * @param userid    请求者id
+ * @param friendid  添加对象id
+ */
 void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
     QByteArray message;
     QDataStream message_stream(&message,QIODevice::WriteOnly);
@@ -92,7 +115,9 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
 /* 接收server端消息
  * 调用对应adaper函数
  */
-
+/**
+ * @brief ClientSocketHandler::slot_readyread 槽函数
+ */
 void ClientSocketHandler::slot_readyread(){
     qDebug() << "here";
     QByteArray message = tcp_socket->readAll();
@@ -146,10 +171,10 @@ void ClientSocketHandler::slot_readyread(){
         Status stat = SUCCESS;
         QList<std::tuple<QtId,QString>> friends;
         QString nickname;
-        QtId id = -1;
+        QtId id;
         int count = 0;
         message_stream >> id;
-        while (id != -1) {
+        while (id != 0) {
             message_stream >> nickname;
             auto dui = std::make_tuple(id,nickname);
             friends[count] = dui;
@@ -163,7 +188,7 @@ void ClientSocketHandler::slot_readyread(){
         else{
             stat = FAILED;
             friends.clear();
-            msg = "get_friend_list command error!\n please get later :)";
+            msg = "you don't have any friends\n add someone now :)";
             adapter-> update_friend_list_status(stat,friends,msg);
         }
 
