@@ -46,6 +46,7 @@ void FriendListForm::set_friend_list(QList<std::tuple<QtId, QString> > dataList)
 
 //将tarQtid的好友标红 有未读消息 双击后取消
 void FriendListForm::emphasis_friend_item(QtId tarQtid) {
+    qDebug() << tarQtid;
    MyItemWidget* selected = nullptr;
    for(int i = 0;i < ui ->friendsPool->count();++i) {
        int curQtid = (dynamic_cast<MyItemWidget*>
