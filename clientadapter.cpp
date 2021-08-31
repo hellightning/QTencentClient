@@ -4,6 +4,7 @@
 #include "friendlistform.h"
 #include "clientsockethandler.h"
 #include <QWidget>
+#include <QtConcurrent/QtConcurrent>
 
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
@@ -12,6 +13,8 @@ ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
     sign_in_form->set_adapter(this);
 
     io_handler = new IOHandler();
+
+    ClientSocketHandler::get_instance()->set_adapter(this);
 }
 
 void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
@@ -135,23 +138,30 @@ void ClientAdapter::make_register(QString nickname, QString pwd)
 
 void ClientAdapter::add_friend(QtId friendID)
 {
-
+    auto handler = ClientSocketHandler::get_instance();
+    handler->make_add_friend_request(cliend_id, friendID);
 }
 
 void ClientAdapter::open_chatform(QtId friendID)
 {
     if (qtid_to_chatform[friendID] == nullptr) {
         qtid_to_chatform[friendID] = new ChatForm(nullptr);
-        auto res = io_handler->unserialize_storage(friendID);
-        auto nick = qtid_to_nickname[friendID];
-        if (res.qtid != -1) {
+        QtConcurrent::run(QThreadPool::globalInstance(), [this](int friendID){
+            auto res = io_handler->unserialize_storage(friendID);
+            auto nick = qtid_to_nickname[friendID];
             QList<SMessage> lst;
-            foreach(auto& v, res.message) {
-                lst.append(std::make_tuple(v.first, v.second));
-                qDebug() << v;
+            qDebug() << "open_chatform" << res.message;
+            if (res.qtid != -1) {
+                foreach(auto& v, res.message) {
+                    lst.append(std::make_tuple(v.first, v.second));
+                }
+    //            qtid_to_chatform[friendID]->init_list_widget(lst);
             }
-//            qtid_to_chatform[friendID]->init_list_widget(lst);
-        }
+            qDebug() << "open" << res.qtid << " " << qtid_to_msglist[res.qtid].size();
+            lst.append(qtid_to_msglist[res.qtid]);
+            for(auto& e : lst) qDebug() << "con" << std::get<0>(e) << std::get<1>(e);
+        }, friendID);
+
     } else {
         Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();
         qtid_to_chatform[friendID]->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
@@ -164,12 +174,17 @@ void ClientAdapter::close_chatform(QtId friendID)
     if(qtid_to_chatform[friendID] != nullptr) {
         qtid_to_chatform[friendID] = nullptr;
     }
-    message_list lst;
-    lst.qtid = friendID;
-    lst.nickname = qtid_to_nickname[friendID];
-    for(auto& [id, msg] : qtid_to_msglist[friendID]) {
-        lst.message.append(qMakePair(id, msg));
-    }
-    qDebug() << lst.message;
-    io_handler->serialize_storage(lst);
+    QtConcurrent::run(QThreadPool::globalInstance(), [this](QtId friendID) {
+        qDebug() << "close_chatform" << qtid_to_msglist[friendID].size();
+        message_list lst;
+        lst.qtid = friendID;
+        lst.nickname = qtid_to_nickname[friendID];
+        for(auto& [id, msg] : qtid_to_msglist[friendID]) {
+            lst.message.append(qMakePair(id, msg));
+        }
+        qDebug() << "close:" << lst.message;
+        io_handler->serialize_storage(lst);
+        qtid_to_msglist[friendID].clear();
+    }, friendID);
+
 }

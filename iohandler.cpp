@@ -29,17 +29,25 @@ void IOHandler::serialize_storage(const message_list &lst)
         if (!dir.exists()){
             dir.mkdir(PROJECT_STORAGE_DIR);
     }
-    QString path = PROJECT_STORAGE_DIR + "user_" + lst.qtid + ".qnm";
+    QString path = PROJECT_STORAGE_DIR + QString("user_%1.qnm").arg(lst.qtid);
     QFile file(path);
-    file.open(QFile::WriteOnly | QFile::Truncate);
-//    qDebug() << path;
-    qDebug() << path;
-    QDataStream out(&file);
-    out << lst;
+    qDebug() << "serialize" << lst.message;
+    if (!file.exists()) {
+        file.open(QFile::WriteOnly | QFile::Truncate);
+    //    qDebug() << path;
+        qDebug() << path;
+        QDataStream out(&file);
+        out << lst;
+    } else {
+        file.open(QFile::WriteOnly | QFile::Append);
+        QDataStream out(&file);
+        out << lst.message;
+    }
+
 }
 
 message_list IOHandler::unserialize_storage(int qtid) {
-    QString path = PROJECT_STORAGE_DIR + "user_" + qtid + ".qnm";
+    QString path = PROJECT_STORAGE_DIR + QString("user_%1.qnm").arg(qtid);
     QFile file(path);
     if (!file.exists()) {
         return message_list{-1, "", {}};

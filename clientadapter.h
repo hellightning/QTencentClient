@@ -138,6 +138,9 @@ private:
     IOHandler* io_handler = nullptr;
 signals:
 
+private slots:
+
+
 };
 
 #endif // CLIENTADAPTER_H

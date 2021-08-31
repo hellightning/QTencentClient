@@ -49,29 +49,49 @@ void mytest::test()
 void mytest::adapterTest()
 {
     ClientAdapter adapter;
-    adapter.update_register_status(SUCCESS, 114514, "");
-    QTest::qWait(1000);
-//    adapter.update_register_status(SUCCESS, 5, "");
+//    adapter.update_register_status(SUCCESS, 114514, "");
 //    QTest::qWait(1000);
+//    adapter.update_register_status(SUCCESS, 5, "");
+    QTest::qWait(2000);
+    adapter.update_register_status(SUCCESS, 5, "");
+    QTest::qWait(2000);
 //    adapter.update_register_status(FAILED, -1, "233");
 //    QTest::qWait(1000);
-    adapter.update_sign_status(SUCCESS, "qwq", "");
-    QTest::qWait(1000);
+//    adapter.update_sign_status(SUCCESS, "qwq", "");
+//    QTest::qWait(1000);
 //    adapter.update_sign_status(FAILED, "qwq", "qwq");
 //    QTest::qWait(1000);
-    QList<std::tuple<QtId, QString>> friends;
-    friends.append(std::make_tuple(2, "hhq"));
-    friends.append(std::make_tuple(3, "hhh"));
-    friends.append(std::make_tuple(10, "emm"));
-    adapter.update_friend_list_status(SUCCESS, friends, "");
-    QTest::qWait(1000);
+//    QList<std::tuple<QtId, QString>> friends;
+//    friends.append(std::make_tuple(2, "hhq"));
+//    friends.append(std::make_tuple(3, "hhh"));
+//    friends.append(std::make_tuple(10, "emm"));
+//    adapter.update_friend_list_status(SUCCESS, friends, "");
+//    QTest::qWait(1000);
 //    adapter.update_friend_list_status(FAILED, friends, "233");
 //    QTest::qWait(1000);
-    Message msg;
-    msg << std::make_tuple(5, "czx")
-        << std::make_tuple(10, "2ce");
-    adapter.update_receive_message_status(SUCCESS, msg, "");
-    QTest::qWait(1000);
+//    Message msg;
+//    msg // << std::make_tuple(5, "czx")
+//        << std::make_tuple(10, "2323")
+//        << std::make_tuple(10, "222")
+//        << std::make_tuple(10, "2ce");
+//    adapter.update_receive_message_status(SUCCESS, msg, "");
+//    QTest::qWait(1000);
+//    adapter.send_message(10, "2mm");
+//    QTest::qWait(1000);
+//    adapter.open_chatform(10);
+//    QTest::qWait(1000);
+//    adapter.close_chatform(10);
+//    QTest::qWait(1000);
+//    adapter.update_receive_message_status(SUCCESS, msg, "");
+//    QTest::qWait(1000);
+////    adapter.open_chatform(5);
+//    QTest::qWait(1000);
+//    adapter.open_chatform(10);
+//    QTest::qWait(1000);
+////    adapter.close_chatform(5);
+//    QTest::qWait(1000);
+//    adapter.close_chatform(10);
+//    QTest::qWait(1000);
 //    adapter.update_receive_message_status(FAILED, msg, "233");
 
 }
