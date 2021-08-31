@@ -9,8 +9,7 @@ ChatForm::ChatForm(QWidget *parent) :
     ui->setupUi(this);
 }
 
-ChatForm::~ChatForm()
-{
+ChatForm::~ChatForm() {
     delete ui;
 }
 
@@ -19,22 +18,24 @@ void ChatForm::set_adapter(ClientAdapter *cli) {
     adapter = cli;
 }
 
-void ChatForm::on_sendMessageButton_clicked()
-{
-
+void ChatForm::on_sendMessageButton_clicked() {
+    QString currentMsg = ui ->typeBoard->toPlainText();
+    if(!currentMsg.isEmpty()) {
+        //发送请求
+        adapter->send_message(currentFriendID,currentMsg);
+        //刷新到UI上
+        update_list_widget(std::make_tuple(adapter->cliend_id,currentMsg));
+        ui ->typeBoard ->clear();
+    }
 }
 
-
-void ChatForm::on_closeFormButton_clicked()
-{
-
-}
 
 void ChatForm::init_list_widget(QtId frinendId, QList<SMessage> msgList) {
-
-//    for(int i = 0;i < msgList.size();++i) {
-//        if()
-//    }
+     //TODO 刷新界面好友信息
+     currentFriendID = frinendId;
+     for(int i = 0;i < msgList.size();++i) {
+         update_list_widget(msgList.at(i));
+     }
 }
 
 //更新界面

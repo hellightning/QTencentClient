@@ -6,6 +6,11 @@
 #include <QWidget>
 #include <QtConcurrent/QtConcurrent>
 
+inline QDebug& operator<<(QDebug& os, const SMessage msg) {
+    os << "[" << std::get<0>(msg) <<"," << std::get<1>(msg) << "]";
+    return os;
+}
+
 ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 {
     sign_in_form = new SignInForm();
@@ -28,7 +33,7 @@ void ClientAdapter::update_register_status(Status stat, QtId id, QString errmsg)
         }
         if (sign_in_form != nullptr) {
             sign_in_form->set_qtid(id);
-            qDebug() << id;
+            //qDebug() << id;
         }
     } else {
         if (register_form != nullptr) {
@@ -50,6 +55,7 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
         friend_list_form = new FriendListForm();
         friend_list_form->set_qtid(cliend_id);
         friend_list_form->set_nickname(nickname);
+        friend_list_form->set_adapter(this);
         friend_list_form->show();
         auto handler = ClientSocketHandler::get_instance();
         handler->make_get_friends_request(cliend_id);
@@ -89,6 +95,8 @@ void ClientAdapter::update_add_friend_status(Status stat, std::tuple<QtId, QStri
 
 }
 
+
+//有问题
 void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> msg, QString errmsg)
 {
     for (auto& val : msg) {
@@ -96,10 +104,12 @@ void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> m
         if (stat == SUCCESS) {
             qtid_to_msglist[id].append(val);
             if (qtid_to_chatform[id] != nullptr) {
-//                qtid_to_chatform[id]->update_list_widget(val);
+                qtid_to_chatform[id]->update_list_widget(val);
             } else {
                 // 序列化，TODO
-                friend_list_form->emphasis_friend_item(id);
+                  qDebug () <<"enter update_receive_message_status" <<endl;
+                  friend_list_form->emphasis_friend_item(id);
+                  qDebug() <<qtid_to_msglist;
             }
         } else {
             qDebug() << errmsg;
@@ -148,21 +158,28 @@ void ClientAdapter::open_chatform(QtId friendID)
 {
     if (qtid_to_chatform[friendID] == nullptr) {
         qtid_to_chatform[friendID] = new ChatForm(nullptr);
-        QtConcurrent::run(QThreadPool::globalInstance(), [this](int friendID){
+        qtid_to_chatform[friendID]->set_adapter(this);
+        qtid_to_chatform[friendID]->show();
+
+       // QtConcurrent::run(QThreadPool::globalInstance(), [this](int friendID){
+
             auto res = io_handler->unserialize_storage(friendID);
             auto nick = qtid_to_nickname[friendID];
+
             QList<SMessage> lst;
-            qDebug() << "open_chatform" << res.message;
+
             if (res.qtid != -1) {
                 foreach(auto& v, res.message) {
                     lst.append(std::make_tuple(v.first, v.second));
                 }
                 qtid_to_chatform[friendID]->init_list_widget(friendID,lst);
             }
-            qDebug() << "open" << res.qtid << " " << qtid_to_msglist[res.qtid].size();
-            lst.append(qtid_to_msglist[res.qtid]);
-            for(auto& e : lst) qDebug() << "con" << std::get<0>(e) << std::get<1>(e);
-        }, friendID);
+            lst.append(qtid_to_msglist[friendID]);
+            qDebug() << lst;
+            qtid_to_chatform[friendID] ->init_list_widget(friendID, lst);
+
+
+        //}, friendID);
 
     } else {
         Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();
@@ -177,14 +194,14 @@ void ClientAdapter::close_chatform(QtId friendID)
         qtid_to_chatform[friendID] = nullptr;
     }
     QtConcurrent::run(QThreadPool::globalInstance(), [this](QtId friendID) {
-        qDebug() << "close_chatform" << qtid_to_msglist[friendID].size();
+        //qDebug() << "close_chatform" << qtid_to_msglist[friendID].size();
         message_list lst;
         lst.qtid = friendID;
         lst.nickname = qtid_to_nickname[friendID];
         for(auto& [id, msg] : qtid_to_msglist[friendID]) {
             lst.message.append(qMakePair(id, msg));
         }
-        qDebug() << "close:" << lst.message;
+        //qDebug() << "close:" << lst.message;
         io_handler->serialize_storage(lst);
         qtid_to_msglist[friendID].clear();
     }, friendID);

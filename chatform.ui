@@ -36,27 +36,14 @@
   <widget class="QPushButton" name="sendMessageButton">
    <property name="geometry">
     <rect>
-     <x>740</x>
-     <y>540</y>
+     <x>750</x>
+     <y>530</y>
      <width>151</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>发送</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="closeFormButton">
-   <property name="geometry">
-    <rect>
-     <x>760</x>
-     <y>20</y>
-     <width>151</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string> 关闭</string>
    </property>
   </widget>
  </widget>

@@ -61,6 +61,7 @@ void FriendListForm::emphasis_friend_item(QtId tarQtid) {
 }
 
 void FriendListForm::on_friendListWidget_itemDoubleClicked(MyItemWidget *item) {
+    qDebug() << item << adapter;
     //除去未读消息标志
     item ->clearMsgIcon();
     //打开聊天窗口

@@ -27,13 +27,11 @@ public:
 
 private slots:
     void on_sendMessageButton_clicked();
-    void on_closeFormButton_clicked();
 
 private:
     Ui::ChatForm *ui;
     ClientAdapter* adapter;
-
-
+    QtId currentFriendID;
     void add_item_to_ui(QString,QString);
 };
 
