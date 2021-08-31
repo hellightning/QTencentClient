@@ -45,7 +45,7 @@
      <x>30</x>
      <y>90</y>
      <width>321</width>
-     <height>501</height>
+     <height>461</height>
     </rect>
    </property>
   </widget>
@@ -59,7 +59,17 @@
     </rect>
    </property>
    <property name="text">
-    <string>？</string>
+    <string>加好友</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="friendListEdit">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>610</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
    </property>
   </widget>
  </widget>

@@ -168,8 +168,8 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
  * @brief ClientSocketHandler::slot_readyread 槽函数
  */
 void ClientSocketHandler::slot_readyread(){
-    qDebug() << "here";
     QByteArray message = tcp_socket->readAll();
+    qDebug() << "here" << message;
     QDataStream message_stream(&message, QIODevice::ReadOnly);
     QByteArray tmp_message;
     message_stream >> tmp_message;
@@ -222,13 +222,14 @@ void ClientSocketHandler::slot_readyread(){
         QString nickname;
         QtId id;
         int count = 0;
-        message_stream >> id;
-        while (id != 0) {
-            message_stream >> nickname;
-            auto dui = std::make_tuple(id,nickname);
-            friends[count] = dui;
-            count ++;
+        message_stream >> count;
+        qDebug() << count;
+        for (int i = 0; i < count; ++i) {
             message_stream >> id;
+            message_stream >> nickname;
+            qDebug() <<id <<" " << nickname;
+            auto dui = std::make_tuple(id,nickname);
+            friends.append(std::make_tuple(id, nickname));
         }
         QString msg = "";
         if(count != 0){
