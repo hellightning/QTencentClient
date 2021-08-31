@@ -150,6 +150,7 @@ void ClientAdapter::make_register(QString nickname, QString pwd)
 
 void ClientAdapter::add_friend(QtId friendID)
 {
+    qDebug() << "fsdgdfsg";
     auto handler = ClientSocketHandler::get_instance();
     handler->make_add_friend_request(cliend_id, friendID);
 }

@@ -32,7 +32,7 @@ public:
 
 private slots:
     void on_friendListWidget_itemDoubleClicked(MyItemWidget*);
-    void on_floatActionButton_clicked();
+    void on_pushButton_clicked();
 
 private:
     void add_Item_toUI(QString,int);

@@ -10,6 +10,7 @@ ChatForm::ChatForm(QWidget *parent) :
 }
 
 ChatForm::~ChatForm() {
+    adapter ->close_chatform(currentFriendID);
     delete ui;
 }
 
@@ -57,10 +58,11 @@ void ChatForm::add_item_to_ui(QString nickName, QString realMsg) {
       MyMsgItem* pItemWidget = new MyMsgItem(this);
 //    //连接信号槽
       pItemWidget->setData(nickName, realMsg);
+      pItemWidget -> setRight();
       QListWidgetItem* pItem = new QListWidgetItem();
 
 //    //手动调整自定义Item大小
-      pItem -> setSizeHint(QSize(200,pItemWidget->getHeight()+40));
+      pItem -> setSizeHint(QSize(400,pItemWidget->getHeight()+40));
 
 //    //连接自定义控件
       ui->MsgBoard->addItem(pItem);

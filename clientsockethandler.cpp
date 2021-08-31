@@ -151,6 +151,7 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
     message_stream << userid;
     message_stream << friendid;
     tcp_socket->write(message);
+    qDebug() << message;
     }
 }
 /*
@@ -255,6 +256,7 @@ void ClientSocketHandler::slot_readyread(){
         message_stream >> id;
         QString nickname;
         message_stream >> nickname;
+        qDebug() << id << nickname;
         mFriend = std::make_tuple(id,nickname);
         QString msg = "";
         adapter->update_add_friend_status(stat,mFriend,msg);

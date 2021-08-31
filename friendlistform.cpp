@@ -61,7 +61,7 @@ void FriendListForm::emphasis_friend_item(QtId tarQtid) {
 }
 
 void FriendListForm::on_friendListWidget_itemDoubleClicked(MyItemWidget *item) {
-    qDebug() << item << adapter;
+    //qDebug() << item << adapter;
     //除去未读消息标志
     item ->clearMsgIcon();
     //打开聊天窗口
@@ -103,8 +103,9 @@ void FriendListForm::set_adapter(ClientAdapter *cli) {
     adapter = cli;
 }
 
-void FriendListForm::on_floatActionButton_clicked() {
-    //TO DO 添加好友查找好友
+
+void FriendListForm::on_pushButton_clicked()
+{
     if(!(ui ->friendListEdit->toPlainText().isEmpty())) {
         adapter ->add_friend(ui -> friendListEdit ->toPlainText().toInt());
     }

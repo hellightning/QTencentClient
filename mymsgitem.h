@@ -16,6 +16,7 @@ public:
     ~MyMsgItem();
     void setData(QString,QString);
     int getHeight();
+    void setRight();
 
 private:
     Ui::MyMsgItem *ui;
