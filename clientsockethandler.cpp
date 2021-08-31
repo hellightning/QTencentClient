@@ -10,11 +10,10 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
     tcp_socket = new QTcpSocket();
     QHostAddress hostaddr;
-    hostaddr.setAddress("127.0.0.1");
-    tcp_socket->connectToHost(hostaddr ,2333);
+    hostaddr.setAddress("192.168.43.9");
+    tcp_socket->connectToHost(hostaddr ,11451);
     tcp_socket->waitForConnected(1000);
     connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
-
 }
 
 
