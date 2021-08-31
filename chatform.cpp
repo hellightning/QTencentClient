@@ -20,13 +20,20 @@ void ChatForm::set_adapter(ClientAdapter *cli) {
     adapter = cli;
 }
 
+#include <QDebug>
+//currentMsg = "01:53" + "realMessage"
+
 void ChatForm::on_sendMessageButton_clicked() {
     QString currentMsg = ui ->typeBoard->toPlainText();
     if(!currentMsg.isEmpty()) {
-        //发送请求
-        adapter->send_message(currentFriendID,currentMsg);
+
+        QString curTime = QString("%1").arg(QTime::currentTime().hour(),2,10,QChar('0')) + ":" +
+                QString("%1").arg(QTime::currentTime().minute(),2,10,QChar('0'));
+
+        //发送请求 上传的消息总是自带时间
+        adapter->send_message(currentFriendID,curTime + currentMsg);
         //刷新到UI上
-        update_list_widget(std::make_tuple(adapter->cliend_id,currentMsg));
+        update_list_widget(std::make_tuple(adapter->cliend_id,curTime + currentMsg));
         ui ->typeBoard ->clear();
     }
 }
@@ -54,7 +61,7 @@ void ChatForm::update_list_widget(SMessage currentMsg) {
 void ChatForm::add_item_to_ui(QString nickName, QString realMsg,bool isMySelf) {
       MyMsgItem* pItemWidget = new MyMsgItem(this);
 
-      pItemWidget->setData(nickName, realMsg);
+      pItemWidget->setData(nickName, realMsg.mid(5,realMsg.size()-5),realMsg.mid(0,5));
       QListWidgetItem* pItem = new QListWidgetItem();
 
 //    手动调整自定义Item大小

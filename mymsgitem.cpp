@@ -14,9 +14,10 @@ MyMsgItem::~MyMsgItem()
     delete ui;
 }
 
-void MyMsgItem::setData(QString nickName, QString msg) {
+void MyMsgItem::setData(QString nickName, QString msg,QString curTime) {
     ui ->nickName ->setText(nickName);
     ui ->MsgBoard ->setText(msg);
+    ui ->timeShow ->setText(curTime);
 }
 
 int MyMsgItem::getHeight() {
@@ -37,6 +38,7 @@ void MyMsgItem::setPosRight(bool isRight) {
                         ui->MsgBoard->width(),ui -> MsgBoard->height());
         ui ->nickName ->setGeometry(700 - 70 -(ui ->nickName->width()),ui->nickName->y(),
                         ui->nickName->width(),ui -> nickName->height());
+
     }
     //放左边
     else {

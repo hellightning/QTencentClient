@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "mymsgitem.h"
+#include <QTime>
 
 class ClientAdapter;
 

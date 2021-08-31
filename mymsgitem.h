@@ -14,7 +14,7 @@ class MyMsgItem : public QWidget
 public:
     explicit MyMsgItem(QWidget *parent = nullptr);
     ~MyMsgItem();
-    void setData(QString,QString);
+    void setData(QString,QString,QString);
     int getHeight();
     void setPosRight(bool isRight);
 
