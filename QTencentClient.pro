@@ -25,6 +25,7 @@ SOURCES += \
 HEADERS += \
     chatform.h \
     clientadapter.h \
+    clientlib.h \
     clientsockethandler.h \
     friendlistform.h \
     iohandler.h \

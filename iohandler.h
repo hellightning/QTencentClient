@@ -2,12 +2,7 @@
 #define IOHANDLER_H
 
 #include <QObject>
-
-struct message_list {
-    int qtid;
-    QString nickname;
-    QList<QPair<int, QString>> message;
-};
+#include "clientlib.h"
 
 class IOHandler : QObject
 {

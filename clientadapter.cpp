@@ -4,6 +4,7 @@
 #include "friendlistform.h"
 #include "clientsockethandler.h"
 #include <QWidget>
+#include <QFuture>
 #include <QtConcurrent/QtConcurrent>
 
 inline QDebug& operator<<(QDebug& os, const SMessage msg) {
@@ -162,12 +163,14 @@ void ClientAdapter::open_chatform(QtId friendID)
         qtid_to_chatform[friendID]->set_adapter(this);
         qtid_to_chatform[friendID]->show();
 
-       // QtConcurrent::run(QThreadPool::globalInstance(), [this](int friendID){
+        QList<SMessage> lst;
+
+//        auto future = QtConcurrent::run(QThreadPool::globalInstance(), [this, &lst](int friendID){
 
             auto res = io_handler->unserialize_storage(friendID);
             auto nick = qtid_to_nickname[friendID];
 
-            QList<SMessage> lst;
+
 
             if (res.qtid != -1) {
                 foreach(auto& v, res.message) {
@@ -177,10 +180,13 @@ void ClientAdapter::open_chatform(QtId friendID)
             }
             lst.append(qtid_to_msglist[friendID]);
             qDebug() << lst;
+
+
+//        }, friendID);
+
+//        connect(&future, &QFuture<void>::isFinished, [this](int friendID, QList<SMessage> lst){
             qtid_to_chatform[friendID] ->init_list_widget(friendID, lst);
-
-
-        //}, friendID);
+//        }, friendID, lst);
 
     } else {
         Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();
