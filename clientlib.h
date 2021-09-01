@@ -14,6 +14,14 @@ using SMessage = std::tuple<QtId, QString>;
 using Message = QList<SMessage>;
 using User = std::tuple<QtId, QString>;
 
+struct file_byte {
+    QtId from_id;
+    QtId to_id;
+    QString file_name;
+    QString file_type;
+    QByteArray file_byte;
+};
+
 struct message_list {
     int qtid;
     QString nickname;

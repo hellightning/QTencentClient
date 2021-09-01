@@ -76,6 +76,14 @@ public:
      */
     void update_receive_message_status(Status stat, QList<SMessage> msg, QString errmsg);
 
+    /**
+     * @brief 接收到文件
+     * @param stat 状态
+     * @param mfile 文件
+     * @param errmsg 错误信息
+     */
+    void update_receive_file_status(Status stat, file_byte mfile, QString errmsg);
+
     ///////////////////////////////////////////////////
     /// UI -> Server
     ///////////////////////////////////////////////////
@@ -123,6 +131,12 @@ public:
      * @brief 取消注册
      */
     void cancel_register();
+    /**
+     * @brief 发送文件
+     * @param 好友ID
+     * @param 文件目录
+     */
+    void send_file(QtId friendID, QString fileDir);
 
 public:
     QtId cliend_id = 114514; // 客户端id
