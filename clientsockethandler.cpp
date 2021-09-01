@@ -206,6 +206,9 @@ void ClientSocketHandler::timerEvent(QTimerEvent * e)
             tcp_socket->connectToHost(QHostAddress(ip) ,port);
             tcp_socket->waitForConnected(1000);
             qDebug() << QString("Lost connection with server and reconnect..%1").arg(tcp_socket->state());
+            if (tcp_socket->ConnectedState == QAbstractSocket::ConnectedState) {
+                make_sign_request(adapter->cliend_id, adapter->password);
+            }
         } else {
             send_heart_beat_request();
         }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include<QListWidget>
+#include <QMouseEvent>
 #include "itemwidget.h"
 #include "clientlib.h"
 
@@ -30,9 +31,18 @@ public:
     void set_adapter(ClientAdapter*);
     int getSize();
 
+protected:
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+
 private slots:
     void on_friendListWidget_itemDoubleClicked(MyItemWidget*);
     void on_pushButton_clicked();
+
+    void on_closebutton_clicked();
+
+    void on_minimizebutton_clicked();
 
 private:
     void add_Item_toUI(QString,int);
@@ -41,6 +51,9 @@ private:
 private:
     Ui::FriendListForm *ui;
     ClientAdapter *adapter;
+    bool isDrag;
+    QPoint mouse_start_point;
+    QPoint window_topleft_point;
 };
 
 #endif // FRIENDLISTFORM_H

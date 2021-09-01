@@ -16,6 +16,7 @@
         <file>images/qt.png</file>
         <file>images/close.png</file>
         <file>images/minimize.png</file>
+        <file>images/file.png</file>
     </qresource>
     <qresource prefix="/Config">
         <file>config.xml</file>

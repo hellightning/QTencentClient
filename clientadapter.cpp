@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QFuture>
 #include <QtConcurrent/QtConcurrent>
+#include <QTextEdit>
 
 inline QDebug& operator<<(QDebug& os, const SMessage msg) {
     os << "[" << std::get<0>(msg) <<"," << std::get<1>(msg) << "]";
@@ -52,14 +53,17 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
     if (stat == SUCCESS) {
         if (sign_in_form != nullptr) {
             delete sign_in_form;
+            sign_in_form = nullptr;
         }
         this->nick_name = nickname;
         qtid_to_nickname[cliend_id] = nickname;
-        friend_list_form = new FriendListForm();
-        friend_list_form->set_qtid(cliend_id);
-        friend_list_form->set_nickandicon(nickname);
-        friend_list_form->set_adapter(this);
-        friend_list_form->show();
+        if (friend_list_form == nullptr) {
+            friend_list_form = new FriendListForm();
+            friend_list_form->set_qtid(cliend_id);
+            friend_list_form->set_nickandicon(nickname);
+            friend_list_form->set_adapter(this);
+            friend_list_form->show();
+        }
         auto handler = ClientSocketHandler::get_instance();
         handler->make_get_friends_request(cliend_id);
     } else {
@@ -169,6 +173,7 @@ void ClientAdapter::sign_in(QtId userid, QString pwd)
 {
     auto handler = ClientSocketHandler::get_instance();
     this->cliend_id = userid;
+    this->password = pwd;
     handler->make_sign_request(userid, pwd);
 }
 

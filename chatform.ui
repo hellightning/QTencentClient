@@ -13,51 +13,76 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QListWidget" name="MsgBoard">
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(64, 80, 255, 255), stop:1 rgba(64, 160, 255, 255));</string>
+  </property>
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
-     <x>25</x>
-     <y>40</y>
-     <width>700</width>
-     <height>471</height>
+     <x>20</x>
+     <y>90</y>
+     <width>931</width>
+     <height>561</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QTextEdit" name="typeBoard">
-   <property name="geometry">
-    <rect>
-     <x>25</x>
-     <y>530</y>
-     <width>700</width>
-     <height>121</height>
-    </rect>
+   <property name="styleSheet">
+    <string notr="true">background-color: white;</string>
    </property>
-  </widget>
-  <widget class="QPushButton" name="sendMessageButton">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>610</y>
-     <width>121</width>
-     <height>31</height>
-    </rect>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-   <property name="text">
-    <string>发送</string>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-  </widget>
-  <widget class="QPushButton" name="sendFileBtn">
-   <property name="geometry">
-    <rect>
-     <x>790</x>
-     <y>560</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>传文件</string>
-   </property>
+   <widget class="QListWidget" name="MsgBoard">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>700</width>
+      <height>431</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="typeBoard">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>430</y>
+      <width>701</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sendMessageButton">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>580</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>发送</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="sendFileBtn">
+    <property name="geometry">
+     <rect>
+      <x>780</x>
+      <y>460</y>
+      <width>81</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/images/images/file.png);</string>
+    </property>
+    <property name="text">
+     <string>传文件</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>
