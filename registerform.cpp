@@ -9,6 +9,7 @@ RegisterForm::RegisterForm(QWidget *parent) :
     ui(new Ui::RegisterForm)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 RegisterForm::~RegisterForm() { delete ui; }
@@ -79,5 +80,12 @@ void RegisterForm::failed_msg(QString str) {
 
 void RegisterForm::show_qtid(QtId id) {
     show_alert_succ(QString("您的ID是：%1").arg(id));
+}
+
+
+void RegisterForm::on_cancelPushButton_clicked()
+{
+    adapter->cancel_register();
+    close();
 }
 

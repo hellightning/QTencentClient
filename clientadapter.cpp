@@ -208,3 +208,10 @@ void ClientAdapter::close_chatform(QtId friendID)
     }, friendID);
 
 }
+
+void ClientAdapter::cancel_register()
+{
+    if (register_form != nullptr)
+        register_form = nullptr;
+
+}

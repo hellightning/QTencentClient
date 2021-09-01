@@ -121,6 +121,10 @@ public:
      * @param friendID 好友ID
      */
     void close_chatform(QtId friendID);
+    /**
+     * @brief 取消注册
+     */
+    void cancel_register();
 
 public:
     QtId cliend_id = 114514; // 客户端id
