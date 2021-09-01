@@ -4,6 +4,8 @@
 #include <QMessageBox>
 #include <QGraphicsDropShadowEffect>
 #include <QGraphicsBlurEffect>
+#include <QPixmap>
+#include <QPainter>
 
 SignInForm::SignInForm(QWidget *parent) :
     QWidget(parent),
@@ -21,9 +23,11 @@ SignInForm::SignInForm(QWidget *parent) :
     auto shadow_effect2 = new QGraphicsDropShadowEffect(this);
     shadow_effect2->setOffset(0, 0);
     shadow_effect2->setColor(Qt::gray);
-    shadow_effect2->setBlurRadius(32);
+    shadow_effect2->setBlurRadius(40);
     ui->Niwatari->setGraphicsEffect(shadow_effect2);
+    //changeIcon(3);
 }
+
 
 void SignInForm::set_adapter(ClientAdapter *cli) {
      adapter = cli;
@@ -40,6 +44,7 @@ QtId SignInForm::get_qtid() {
 
 //更改ui界面上的登录账号
 void SignInForm::set_qtid(QtId id) {
+    //TODO
     ui ->qidTextEdit ->setText(QString("%1").arg(id));
 }
 
@@ -69,7 +74,32 @@ void SignInForm::on_signInPushButton_clicked() {
 }
 
 void SignInForm::failed_sign(QString failedMsg) {
-     show_alert(failedMsg);
+    show_alert(failedMsg);
+}
+
+//切换头像
+void SignInForm::changeIcon(int iconId) {
+
+    iconId %= 10;
+    iconId += 10;
+    iconId %= 10;
+
+    QString imgPath = ":/Icons/icon/img" +QString::number(iconId + 1) + ".jpg";
+
+    int myWidth = ui ->Niwatari ->width() - 6;
+    int myHeight = ui ->Niwatari ->height();
+
+    QPixmap originPath(imgPath);
+    QPixmap roundCircle(myWidth,myHeight);
+    roundCircle.fill(Qt::transparent);
+    QPainter painter(&roundCircle);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    QPainterPath path;
+    path.addEllipse(0,0,myWidth,myHeight);    //绘制椭圆
+    painter.setClipPath(path);
+    painter.drawPixmap(0,0,myWidth,myHeight,originPath);
+
+    ui->Niwatari->setPixmap(roundCircle);
 }
 
 void SignInForm::on_registerPushButton_clicked(){
@@ -77,16 +107,12 @@ void SignInForm::on_registerPushButton_clicked(){
     adapter->open_register_form();
 }
 
-
-void SignInForm::on_CloseButton_clicked()
-{
+void SignInForm::on_CloseButton_clicked() {
     close();
 }
 
 
-void SignInForm::on_SmallButton_clicked()
-{
-
+void SignInForm::on_SmallButton_clicked() {
     setWindowState(Qt::WindowMinimized);
 }
 
