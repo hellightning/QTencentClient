@@ -43,11 +43,19 @@ public:
      */
     void make_add_friend_request(QtId userid, QtId friendid);
 
+protected:
+    virtual void timerEvent(QTimerEvent*);
+
 private:
     explicit ClientSocketHandler(QObject *parent = nullptr);
     static ClientSocketHandler* instance;
     QTcpSocket* tcp_socket;
     ClientAdapter* adapter;
+    int socket_reconnect_timer;
+
+    QString ip;
+    int port;
+
 private slots:
     /**
       * 接收消息的槽

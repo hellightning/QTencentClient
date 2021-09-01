@@ -1,6 +1,7 @@
 #include "clientsockethandler.h"
 #include "clientadapter.h"
 #include <QHostAddress>
+#include <QTimerEvent>
 void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 {
     adapter = _adapter;
@@ -10,10 +11,13 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
     tcp_socket = new QTcpSocket();
     QHostAddress hostaddr;
-    auto [ip, port] = read_network_config_file();
-    tcp_socket->connectToHost(QHostAddress(ip) ,port);
+    auto [_ip, _port] = read_network_config_file();
+    tcp_socket->connectToHost(QHostAddress(_ip) ,_port);
+    ip = _ip; port = _port;
+    qDebug() << ip << " " << port << " ";
     tcp_socket->waitForConnected(1000);
     connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
+    socket_reconnect_timer = startTimer(5000);
 }
 
 
@@ -152,6 +156,16 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
     message_stream << friendid;
     tcp_socket->write(message);
     qDebug() << message;
+    }
+}
+
+void ClientSocketHandler::timerEvent(QTimerEvent * e)
+{
+    if (e->timerId() == socket_reconnect_timer) {
+        if (tcp_socket->state() == QAbstractSocket::UnconnectedState) {
+            tcp_socket->connectToHost(QHostAddress(ip) ,port);
+            tcp_socket->waitForConnected(1000);
+        }
     }
 }
 /*

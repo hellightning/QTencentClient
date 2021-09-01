@@ -7,6 +7,7 @@ ChatForm::ChatForm(QWidget *parent) :
     ui(new Ui::ChatForm)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
     //ui->MsgBoard->setViewMode(QListView::viewMode(QListView::ViewMode));
 }
 

@@ -31,10 +31,10 @@ inline server_config read_network_config_file() {
     while (!reader.atEnd()) {
         if (reader.isStartElement()) {
             if (reader.name() == "ip") {
-                ip = reader.readElementText();
+                ip = reader.readElementText().trimmed();
             }
             if (reader.name() == "port") {
-                port = reader.readElementText();
+                port = reader.readElementText().trimmed();
             }
         }
         reader.readNext();
