@@ -69,8 +69,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>28</width>
-     <height>28</height>
+     <width>320</width>
+     <height>120</height>
     </rect>
    </property>
    <property name="styleSheet">

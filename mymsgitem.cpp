@@ -1,5 +1,7 @@
 #include "mymsgitem.h"
 #include "ui_mymsgitem.h"
+#include <QPainter>
+#include <QLabel>
 
 MyMsgItem::MyMsgItem(QWidget *parent) :
     QWidget(parent),
@@ -15,9 +17,27 @@ MyMsgItem::~MyMsgItem()
 }
 
 void MyMsgItem::setData(QString nickName, QString msg,QString curTime) {
-    ui ->nickName ->setText(nickName);
+    ui ->nickName ->setText(nickName.mid(1,nickName.size()-1));
     ui ->MsgBoard ->setText(msg);
     ui ->timeShow ->setText(curTime);
+
+    int iconId = nickName.mid(0,1).toInt();
+    QString imgPath = ":/Icons/icon/img" +QString::number(iconId + 1) + ".jpg";
+
+    int myWidth = ui->msgIcon->width() - 6;
+    int myHeight = ui->msgIcon->height();
+
+    QPixmap originPath(imgPath);
+    QPixmap roundCircle(myWidth,myHeight);
+    roundCircle.fill(Qt::transparent);
+    QPainter painter(&roundCircle);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    QPainterPath path;
+    path.addEllipse(0,0,myWidth,myHeight);    //绘制椭圆
+    painter.setClipPath(path);
+    painter.drawPixmap(0,0,myWidth,myHeight,originPath);
+
+    ui->msgIcon->setPixmap(roundCircle);
 }
 
 int MyMsgItem::getHeight() {
@@ -38,6 +58,8 @@ void MyMsgItem::setPosRight(bool isRight) {
                         ui->MsgBoard->width(),ui -> MsgBoard->height());
         ui ->nickName ->setGeometry(700 - 70 -(ui ->nickName->width()),ui->nickName->y(),
                         ui->nickName->width(),ui -> nickName->height());
+        ui ->msgIcon -> setGeometry(700 - 50,ui ->MsgBoard ->y(),
+                                     ui->MsgBoard->width(),ui -> MsgBoard->height());
 
     }
     //放左边
@@ -46,6 +68,8 @@ void MyMsgItem::setPosRight(bool isRight) {
                         ui->MsgBoard->width(),ui -> MsgBoard->height());
         ui ->nickName ->setGeometry(10, ui->nickName->y(),
                         ui->nickName->width(),ui -> nickName->height());
+        ui ->msgIcon -> setGeometry(10,ui ->MsgBoard ->y(),
+                                     ui->MsgBoard->width(),ui -> MsgBoard->height());
 
     }
     //修改当前自定义控件大小
