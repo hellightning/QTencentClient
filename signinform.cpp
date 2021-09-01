@@ -117,3 +117,27 @@ void SignInForm::on_SmallButton_clicked() {
     setWindowState(Qt::WindowMinimized);
 }
 
+void SignInForm::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = true;
+        mouse_start_point = e->globalPos();
+        window_topleft_point = frameGeometry().topLeft();
+    }
+}
+
+void SignInForm::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = false;
+    }
+}
+
+void SignInForm::mouseMoveEvent(QMouseEvent *e)
+{
+    if (isDrag) {
+        QPoint dist = e->globalPos() - mouse_start_point;
+        this->move(window_topleft_point + dist);
+    }
+}
+

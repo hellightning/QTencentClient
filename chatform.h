@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "mymsgitem.h"
 #include <QTime>
+#include <QMouseEvent>
 
 class ClientAdapter;
 
@@ -35,10 +36,18 @@ private slots:
 
     void on_SmallButton_clicked();
 
+protected:
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+
 private:
     Ui::ChatForm *ui;
     ClientAdapter* adapter;
     QtId currentFriendID;
+    bool isDrag;
+    QPoint mouse_start_point;
+    QPoint window_topleft_point;
     void add_item_to_ui(QString nickName, QString realMsg,bool isMySelf);
 };
 
