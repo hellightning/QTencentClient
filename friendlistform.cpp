@@ -3,6 +3,7 @@
 #include "clientadapter.h"
 #include <QDebug>
 #include <QMessageBox>
+#include <QPainter>
 
 FriendListForm::FriendListForm(QWidget *parent) :
     QWidget(parent),
@@ -30,9 +31,27 @@ void FriendListForm::set_qtid(QtId id) {
     ui ->qtIdLabel ->setText(QString("%1").arg(id));
 }
 
-//设置昵称
+//设置昵称和头像
 void FriendListForm::set_nickname(QString nick) {
-    ui ->MyNicknameLabel ->setText(nick);
+    ui -> MyNicknameLabel -> setText(nick.mid(1,nick.size()-1));
+
+    int iconId = nick.mid(0,1).toInt();
+    QString imgPath = ":/Icons/icon/img" +QString::number(iconId + 1) + ".jpg";
+
+    int myWidth = ui ->iconLabel ->width() - 6;
+    int myHeight = ui ->iconLabel ->height();
+
+    QPixmap originPath(imgPath);
+    QPixmap roundCircle(myWidth,myHeight);
+    roundCircle.fill(Qt::transparent);
+    QPainter painter(&roundCircle);
+    painter.setRenderHints(QPainter::Antialiasing | QPainter::SmoothPixmapTransform);
+    QPainterPath path;
+    path.addEllipse(0,0,myWidth,myHeight);    //绘制椭圆
+    painter.setClipPath(path);
+    painter.drawPixmap(0,0,myWidth,myHeight,originPath);
+
+    ui->iconLabel->setPixmap(roundCircle);
 }
 
 //更新UI界面 将传输的好友数据显示到UI上

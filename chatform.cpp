@@ -1,6 +1,8 @@
 #include "chatform.h"
 #include "ui_chatform.h"
 #include "clientadapter.h"
+#include <QFileDialog>
+#include <QStandardPaths>
 
 ChatForm::ChatForm(QWidget *parent) :
     QWidget(parent),
@@ -58,6 +60,14 @@ void ChatForm::update_list_widget(SMessage currentMsg) {
 
 }
 
+void ChatForm::on_get_file_succ(QString filePass,QString fileName) {
+     //TODO 弹文件传输完成消息 双击打开
+     add_item_to_ui(adapter->qtid_to_nickname[currentFriendID],
+         "对方发送 " + fileName,false);
+
+     qDebug() << "完成文件传输" << endl;
+}
+
 
 void ChatForm::add_item_to_ui(QString nickName, QString realMsg,bool isMySelf) {
       MyMsgItem* pItemWidget = new MyMsgItem(this);
@@ -73,5 +83,15 @@ void ChatForm::add_item_to_ui(QString nickName, QString realMsg,bool isMySelf) {
 //    连接自定义控件
       ui->MsgBoard->addItem(pItem);
       ui->MsgBoard->setItemWidget(pItem, pItemWidget);
+}
+
+
+void ChatForm::on_sendFileBtn_clicked() {
+    auto fileName = QFileDialog::getOpenFileName(nullptr, "打开您发送的文件",
+                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
+    //TODO直接显示传输文件 不可点击
+    add_item_to_ui(adapter->qtid_to_nickname[adapter ->cliend_id],
+        "已发送 " + fileName,true);
+    adapter ->send_file(currentFriendID,fileName);
 }
 

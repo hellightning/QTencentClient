@@ -25,9 +25,11 @@ public:
     void set_adapter(ClientAdapter*);
     void init_list_widget(QtId,QList<SMessage>);
     void update_list_widget(SMessage);
+    void on_get_file_succ(QString,QString);
 
 private slots:
     void on_sendMessageButton_clicked();
+    void on_sendFileBtn_clicked();
 
 private:
     Ui::ChatForm *ui;

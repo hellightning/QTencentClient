@@ -227,7 +227,6 @@ void ClientAdapter::cancel_register()
 
 }
 
-void ClientAdapter::send_file(QtId friendID, QString fileDir)
-{
+void ClientAdapter::send_file(QtId friendID, QString fileDir) {
 
 }
