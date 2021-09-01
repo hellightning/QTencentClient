@@ -228,6 +228,7 @@ void ClientSocketHandler::slot_readyread(){
         for (int i = 0; i < count1; ++i) {
             message_stream >> id;
             message_stream >> nickname;
+
             int count2 = 0;
             message_stream >> count2;
             for(int j = 0;j< count2; ++j){

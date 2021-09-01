@@ -6,84 +6,243 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>612</width>
-    <height>353</height>
+    <width>741</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLineEdit" name="qidTextEdit">
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+	border-radius: 4px;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+QPushButton:hover {
+    background-color: rgb(236, 245, 255);
+    border: 1px solid rgb(64, 158, 255);
+    color: rgb(64, 158, 255);
+}
+
+QPushButton:pressed {
+    background-color: rgb(236, 245, 255);
+    border: 1px solid rgb(64, 100, 255);
+    color: rgb(64, 100, 255);
+}
+
+QLineEdit {
+	border-radius: 4px;
+    border: 1px solid gray;
+}
+
+QLineEdit:focus {
+    border: 1px solid rgb(64, 100, 255);
+}</string>
+  </property>
+  <widget class="QFrame" name="BackgroundFrame">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>70</y>
-     <width>311</width>
-     <height>51</height>
+     <x>10</x>
+     <y>10</y>
+     <width>721</width>
+     <height>461</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>90</y>
-     <width>72</width>
-     <height>15</height>
-    </rect>
+   <property name="styleSheet">
+    <string notr="true">QFrame#BackgroundFrame {
+margin: 10;
+background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(64, 80, 255, 255), stop:1 rgba(64, 160, 255, 255));
+}</string>
    </property>
-   <property name="text">
-    <string>QtId</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>180</y>
-     <width>72</width>
-     <height>15</height>
-    </rect>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
    </property>
-   <property name="text">
-    <string>密码</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="passwordTextEdit">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>160</y>
-     <width>311</width>
-     <height>51</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="signInPushButton">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>260</y>
-     <width>121</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>登录</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="registerPushButton">
-   <property name="geometry">
-    <rect>
-     <x>340</x>
-     <y>260</y>
-     <width>121</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>注册</string>
-   </property>
+   <widget class="QFrame" name="MainFrame">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>140</y>
+      <width>681</width>
+      <height>301</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#MainFrame {
+    background: white;
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLineEdit" name="qidTextEdit">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>50</y>
+       <width>311</width>
+       <height>51</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>50</y>
+       <width>72</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>QtId</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>140</y>
+       <width>72</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>密码</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="passwordTextEdit">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>130</y>
+       <width>311</width>
+       <height>51</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="signInPushButton">
+     <property name="geometry">
+      <rect>
+       <x>170</x>
+       <y>220</y>
+       <width>121</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>登录</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="registerPushButton">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>220</y>
+       <width>121</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>15</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>注册</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="Niwatari">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>60</y>
+      <width>120</width>
+      <height>120</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">image: url(:/images/images/avatar.png);
+background-color: white;
+border-radius: 60px;
+border: 3px solid #888;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CloseButton">
+    <property name="geometry">
+     <rect>
+      <x>640</x>
+      <y>10</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border-image: url(:/resources/avator/close.png);
+	background-color: rgba(0,0,0,0);
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 106, 0, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SmallButton">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>10</y>
+      <width>61</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border-image: url(:/resources/avator/minimize.png);
+background-color: rgba(0,0,0,0);
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(200, 200, 200, 150), stop:1 rgba(220, 220, 220, 150));
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

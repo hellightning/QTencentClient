@@ -27,6 +27,10 @@ private slots:
     void on_signInPushButton_clicked();
     void on_registerPushButton_clicked();
 
+    void on_CloseButton_clicked();
+
+    void on_SmallButton_clicked();
+
 private:
     Ui::SignInForm *ui;
     ClientAdapter* adapter;

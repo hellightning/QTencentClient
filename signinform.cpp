@@ -62,3 +62,16 @@ void SignInForm::on_registerPushButton_clicked(){
     adapter->open_register_form();
 }
 
+
+void SignInForm::on_CloseButton_clicked()
+{
+    close();
+}
+
+
+void SignInForm::on_SmallButton_clicked()
+{
+
+    setWindowState(Qt::WindowMinimized);
+}
+

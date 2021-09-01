@@ -11,4 +11,10 @@
         <file>C:/Users/Faller/Desktop/icon/img9.jpg</file>
         <file>C:/Users/Faller/Desktop/icon/img10.jpg</file>
     </qresource>
+    <qresource prefix="/images">
+        <file>images/avatar.png</file>
+        <file>images/qt.png</file>
+        <file>images/close.png</file>
+        <file>images/minimize.png</file>
+    </qresource>
 </RCC>
