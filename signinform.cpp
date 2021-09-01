@@ -2,12 +2,24 @@
 #include "ui_signinform.h"
 #include "clientadapter.h"
 #include <QMessageBox>
+#include <QGraphicsDropShadowEffect>
+#include <QGraphicsBlurEffect>
 
 SignInForm::SignInForm(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::SignInForm)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_TranslucentBackground);
+    auto shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0, 0);
+    shadow_effect->setColor(Qt::gray);
+    shadow_effect->setBlurRadius(8);
+    ui->MainFrame->setGraphicsEffect(shadow_effect);
+
+    auto blur_effect = new QGraphicsBlurEffect(this);
+    blur_effect->setBlurRadius(5.0);
+    ui->Niwatari->setGraphicsEffect(blur_effect);
 }
 
 void SignInForm::set_adapter(ClientAdapter *cli) {

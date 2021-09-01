@@ -198,7 +198,7 @@ border: 3px solid #888;</string>
     <property name="geometry">
      <rect>
       <x>640</x>
-      <y>10</y>
+      <y>20</y>
       <width>61</width>
       <height>31</height>
      </rect>
@@ -224,7 +224,7 @@ QPushButton:hover {
     <property name="geometry">
      <rect>
       <x>580</x>
-      <y>10</y>
+      <y>20</y>
       <width>61</width>
       <height>31</height>
      </rect>
