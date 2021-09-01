@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>326</width>
-    <height>155</height>
+    <width>320</width>
+    <height>120</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QLabel" name="Icon">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>20</y>
-     <width>41</width>
-     <height>31</height>
+     <x>20</x>
+     <y>25</y>
+     <width>85</width>
+     <height>85</height>
     </rect>
    </property>
    <property name="text">
@@ -29,40 +29,33 @@
   <widget class="QLabel" name="nickName">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>10</y>
-     <width>91</width>
-     <height>21</height>
+     <x>130</x>
+     <y>25</y>
+     <width>101</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>昵称</string>
    </property>
   </widget>
-  <widget class="QLabel" name="qtId">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>60</y>
-     <width>72</width>
-     <height>15</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>qt号</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="hasMsg">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>30</y>
-     <width>31</width>
-     <height>31</height>
+     <x>270</x>
+     <y>55</y>
+     <width>26</width>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 7, 11);</string>
+    <string notr="true">min-width: 24px; min-height: 24px;max-width:24px; max-height: 24px;border-radius: 12px;  border:1px solid black;background:red</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Box</enum>
@@ -76,8 +69,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>311</width>
-     <height>151</height>
+     <width>28</width>
+     <height>28</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -85,6 +78,19 @@
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="qtId">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>65</y>
+     <width>71</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
    </property>
   </widget>
  </widget>

@@ -21,7 +21,8 @@ public:
 
     //设置数据
 
-    void SetData(QString,int);
+    void SetNickAndIcon(QString);
+    void setQtId(int);
     int getQid();
     QString getNickName();
     void setHasMsg();

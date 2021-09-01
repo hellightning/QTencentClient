@@ -17,10 +17,17 @@
    <property name="geometry">
     <rect>
      <x>140</x>
-     <y>0</y>
+     <y>10</y>
      <width>81</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>Faller</string>
@@ -31,8 +38,8 @@
     <rect>
      <x>30</x>
      <y>90</y>
-     <width>321</width>
-     <height>461</height>
+     <width>320</width>
+     <height>480</height>
     </rect>
    </property>
   </widget>
@@ -40,7 +47,7 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>600</y>
+     <y>590</y>
      <width>93</width>
      <height>41</height>
     </rect>
@@ -53,7 +60,7 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>610</y>
+     <y>595</y>
      <width>201</width>
      <height>31</height>
     </rect>
@@ -66,19 +73,6 @@
      <y>10</y>
      <width>65</width>
      <height>65</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>TextLabel</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="qtIdLabel">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>50</y>
-     <width>72</width>
-     <height>15</height>
     </rect>
    </property>
    <property name="text">

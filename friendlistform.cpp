@@ -28,11 +28,11 @@ int FriendListForm::getSize() {
 
 //设置Qtid
 void FriendListForm::set_qtid(QtId id) {
-    ui ->qtIdLabel ->setText(QString("%1").arg(id));
+    //ui ->qtIdLabel ->setText(QString("%1").arg(id));
 }
 
 //设置昵称和头像
-void FriendListForm::set_nickname(QString nick) {
+void FriendListForm::set_nickandicon(QString nick) {
     ui -> MyNicknameLabel -> setText(nick.mid(1,nick.size()-1));
 
     int iconId = nick.mid(0,1).toInt();
@@ -103,11 +103,14 @@ void FriendListForm::add_Item_toUI(QString nickName,int qtID) {
     connect(pItemWidget,SIGNAL(double_cliceked_to_friendsform(MyItemWidget*)),
         this,SLOT(on_friendListWidget_itemDoubleClicked(MyItemWidget*)));
 
-    pItemWidget->SetData(nickName, qtID);
+    //好友位置中要记录id是多少
+    pItemWidget->SetNickAndIcon(nickName);
+    pItemWidget->setQtId(qtID);
+
     QListWidgetItem* pItem = new QListWidgetItem();
 
     //手动调整自定义Item大小
-    pItem->setSizeHint(QSize(350, 60));
+    pItem->setSizeHint(QSize(320, 122));
 
     //连接自定义控件
     ui->friendsPool->addItem(pItem);

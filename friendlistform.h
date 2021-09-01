@@ -21,7 +21,7 @@ public:
     ~FriendListForm();
     //设置当前窗口用户数据
     void set_qtid(QtId);
-    void set_nickname(QString);
+    void set_nickandicon(QString);
     void set_friend_list(QList<std::tuple<QtId, QString>>);
     void emphasis_friend_item(QtId);
     void show_error(QString);

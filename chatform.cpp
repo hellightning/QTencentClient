@@ -89,8 +89,10 @@ void ChatForm::on_sendFileBtn_clicked() {
     auto fileName = QFileDialog::getOpenFileName(nullptr, "打开您发送的文件",
                     QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
     //TODO直接显示传输文件 不可点击
-    add_item_to_ui(adapter->qtid_to_nickname[adapter ->cliend_id],
-        "已发送 " + fileName,true);
-    adapter ->send_file(currentFriendID,fileName);
+    if(!fileName.isEmpty()) {
+        add_item_to_ui(adapter->qtid_to_nickname[adapter ->cliend_id],
+            "已发送 " + fileName,true);
+        adapter ->send_file(currentFriendID,fileName);
+    }
 }
 

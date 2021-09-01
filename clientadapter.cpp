@@ -57,7 +57,7 @@ void ClientAdapter::update_sign_status(Status stat, QString nickname, QString er
         qtid_to_nickname[cliend_id] = nickname;
         friend_list_form = new FriendListForm();
         friend_list_form->set_qtid(cliend_id);
-        friend_list_form->set_nickname(nickname);
+        friend_list_form->set_nickandicon(nickname);
         friend_list_form->set_adapter(this);
         friend_list_form->show();
         auto handler = ClientSocketHandler::get_instance();
