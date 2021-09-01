@@ -13,6 +13,7 @@ public:
     friend QDataStream& operator>>(QDataStream& input, message_list& lst);
     void serialize_storage(const message_list& lst);
     message_list unserialize_storage(int qtid);
+    bool store_file(const file_byte& file);
 
 };
 

@@ -60,4 +60,30 @@ message_list IOHandler::unserialize_storage(int qtid) {
     return lst;
 }
 
+bool IOHandler::store_file(const file_byte& file) {
+    QDir dir(PROJECT_STORAGE_DIR);
+        if (!dir.exists()){
+            dir.mkdir(PROJECT_STORAGE_DIR);
+    }
+    QDir dir2(PROJECT_STORAGE_DIR + "files/");
+        if (!dir2.exists()){
+            dir2.mkdir(PROJECT_STORAGE_DIR + "files/");
+    }
+    QString store_path = PROJECT_STORAGE_DIR + QString("files/%1.%2").arg(file.file_name).arg(file.file_type);
+    QFile qfile(store_path);
+    if (qfile.exists()) {
+        for (int i = 1; ;++i) {
+            store_path = PROJECT_STORAGE_DIR + QString("files/%1_%2.%3").arg(file.file_name).arg(i).arg(file.file_type);
+            qfile.setFileName(store_path);
+            if (!qfile.exists())
+                break;
+        }
+    }
+    if(!qfile.open(QIODevice::ReadWrite)) {
+        return false;
+    }
+    qfile.write(file.file_byte);
+    return true;
+}
+
 

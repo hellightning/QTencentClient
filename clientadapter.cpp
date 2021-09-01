@@ -120,7 +120,20 @@ void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> m
 
 void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QString errmsg)
 {
+    if (stat == SUCCESS) {
+        auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, &mfile](){
+            io_handler->store_file(mfile);
+        });
+        connect(&fb, &decltype(fb)::isFinished, [this, &mfile](){
+            // ID: 对方的ID
+            // Message: 文件路径&文件名
+            if (qtid_to_chatform[mfile.to_id] != nullptr) {
 
+            }
+        });
+    } else {
+
+    }
 }
 
 void ClientAdapter::send_message(QtId friendId, QString msg)
