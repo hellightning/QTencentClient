@@ -16,6 +16,13 @@ class ClientSocketHandler : public QObject
     Q_OBJECT
 public:
     static ClientSocketHandler* get_instance();
+    /**
+     * @brief 发送文件的请求
+     * @param from_id 发送者id
+     * @param to_id 接收者id
+     * @param filename  文件名
+     */
+    void make_send_file_request(QtId from_id,QtId to_id,QString filename);
     void set_adapter(ClientAdapter*);
     /**
      * @brief 发送消息的请求

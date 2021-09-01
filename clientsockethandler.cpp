@@ -23,6 +23,14 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
  * 发送消息到server端
  */
 
+void ClientSocketHandler::make_send_file_request(QtId from_id, QtId to_id, QString filename){
+    auto check == tcp_socket->state();
+    if(check == 0){
+        Status stat = FAILED;
+
+        adapter->update_receive_file_status(stat,);
+    }
+}
 /**
  * @brief make_send_message_request 发送"发送消息请求"
  * @param author    请求者id及昵称
