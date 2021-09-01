@@ -2,6 +2,7 @@
 #include "clientadapter.h"
 #include <QHostAddress>
 #include <QTimerEvent>
+#include <QTime>
 void ClientSocketHandler::set_adapter(ClientAdapter* _adapter)
 {
     adapter = _adapter;
@@ -17,7 +18,7 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
     qDebug() << ip << " " << port << " ";
     tcp_socket->waitForConnected(1000);
     connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
-    socket_reconnect_timer = startTimer(5000);
+    socket_reconnect_timer = startTimer(10000);
 }
 
 
@@ -194,13 +195,14 @@ void ClientSocketHandler::send_heart_beat_request()
 {
     QByteArray msg;
     QDataStream msg_stream(&msg, QIODevice::WriteOnly);
-    msg_stream << "HEART_BEAT";
+    msg_stream << "HEART_BEAT" << adapter->cliend_id;
     tcp_socket->write(msg);
     qDebug() << msg;
 }
 
 void ClientSocketHandler::timerEvent(QTimerEvent * e)
 {
+    qDebug() << QTime::currentTime();
     if (e->timerId() == socket_reconnect_timer) {
         if (tcp_socket->state() == QAbstractSocket::UnconnectedState) {
             tcp_socket->connectToHost(QHostAddress(ip) ,port);
