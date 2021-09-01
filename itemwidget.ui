@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>320</width>
-    <height>120</height>
+    <height>102</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QLabel" name="Icon">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>25</y>
-     <width>85</width>
-     <height>85</height>
+     <width>50</width>
+     <height>50</height>
     </rect>
    </property>
    <property name="text">
@@ -29,14 +29,15 @@
   <widget class="QLabel" name="nickName">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>25</y>
+     <x>85</x>
+     <y>20</y>
      <width>101</width>
      <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
+     <pointsize>15</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -49,7 +50,7 @@
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>55</y>
+     <y>38</y>
      <width>26</width>
      <height>26</height>
     </rect>
@@ -68,9 +69,9 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>10</y>
      <width>320</width>
-     <height>120</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -83,11 +84,16 @@
   <widget class="QLabel" name="qtId">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>85</x>
      <y>65</y>
-     <width>71</width>
-     <height>21</height>
+     <width>81</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>TextLabel</string>

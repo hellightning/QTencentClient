@@ -31,6 +31,10 @@ private slots:
     void on_sendMessageButton_clicked();
     void on_sendFileBtn_clicked();
 
+    void on_CloseButton_clicked();
+
+    void on_SmallButton_clicked();
+
 private:
     Ui::ChatForm *ui;
     ClientAdapter* adapter;

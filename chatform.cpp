@@ -96,3 +96,16 @@ void ChatForm::on_sendFileBtn_clicked() {
     }
 }
 
+
+void ChatForm::on_CloseButton_clicked()
+{
+    adapter ->close_chatform(currentFriendID);
+    close();
+}
+
+
+void ChatForm::on_SmallButton_clicked()
+{
+    setWindowState(Qt::WindowMinimized);
+}
+
