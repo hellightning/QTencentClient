@@ -10,6 +10,7 @@ SignInForm::SignInForm(QWidget *parent) :
     ui(new Ui::SignInForm)
 {
     ui->setupUi(this);
+    setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     auto shadow_effect = new QGraphicsDropShadowEffect(this);
     shadow_effect->setOffset(0, 0);
@@ -17,9 +18,11 @@ SignInForm::SignInForm(QWidget *parent) :
     shadow_effect->setBlurRadius(8);
     ui->MainFrame->setGraphicsEffect(shadow_effect);
 
-    auto blur_effect = new QGraphicsBlurEffect(this);
-    blur_effect->setBlurRadius(5.0);
-    ui->Niwatari->setGraphicsEffect(blur_effect);
+    auto shadow_effect2 = new QGraphicsDropShadowEffect(this);
+    shadow_effect2->setOffset(0, 0);
+    shadow_effect2->setColor(Qt::gray);
+    shadow_effect2->setBlurRadius(32);
+    ui->Niwatari->setGraphicsEffect(shadow_effect2);
 }
 
 void SignInForm::set_adapter(ClientAdapter *cli) {

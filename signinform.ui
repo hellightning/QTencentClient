@@ -205,7 +205,7 @@ border: 3px solid #888;</string>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	border-image: url(:/resources/avator/close.png);
+	border-image: url(:/images/images/close.png);
 	background-color: rgba(0,0,0,0);
 }
 
@@ -231,7 +231,7 @@ QPushButton:hover {
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	border-image: url(:/resources/avator/minimize.png);
+	border-image: url(:/images/images/minimize.png);
 background-color: rgba(0,0,0,0);
 }
 
