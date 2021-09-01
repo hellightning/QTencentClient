@@ -143,3 +143,13 @@ void ChatForm::mouseMoveEvent(QMouseEvent *e)
     }
 }
 
+void ChatForm::keyPressEvent(QKeyEvent *e)
+{
+    if (((QApplication::keyboardModifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Enter))
+            || ((QApplication::keyboardModifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Return))) {
+        if (focusWidget() == ui->typeBoard) {
+            on_sendMessageButton_clicked();
+        }
+    }
+}
+

@@ -5,6 +5,7 @@
 #include "mymsgitem.h"
 #include <QTime>
 #include <QMouseEvent>
+#include <QKeyEvent>
 
 class ClientAdapter;
 
@@ -40,6 +41,8 @@ protected:
     virtual void mousePressEvent(QMouseEvent* e);
     virtual void mouseReleaseEvent(QMouseEvent* e);
     virtual void mouseMoveEvent(QMouseEvent* e);
+
+    virtual void keyPressEvent(QKeyEvent* e);
 
 private:
     Ui::ChatForm *ui;
