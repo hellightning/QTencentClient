@@ -28,11 +28,31 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
  */
 
 void ClientSocketHandler::make_send_file_request(QtId from_id, QtId to_id, QString filename){
-    auto check == tcp_socket->state();
+    auto check = tcp_socket->state();
     if(check == 0){
         Status stat = FAILED;
-
-        adapter->update_receive_file_status(stat,);
+        file_byte mfile = {-1,-1,"","",QByteArray()};
+        QString errmsg = "receive file command error!\nplease try later :)";
+        adapter->update_receive_file_status(stat,mfile,errmsg);
+    }
+    else{
+        QByteArray message;
+        QDataStream message_stream(&message,QIODevice::WriteOnly);
+        message_stream << "SEND_FILE";
+        message_stream << from_id;
+        message_stream << to_id;
+        QFile qfile(filename);
+        QFileInfo info(qfile);
+        if (qfile.size() > (1 << 8) * sizeof(quint64)) {
+            adapter->update_receive_file_status(FAILED, {-1,-1,"","",QByteArray()}, "FILE IS TOO BIG");
+            return;
+        }
+        message_stream << qfile.size();
+        message_stream << info.suffix();
+        message_stream << info.completeSuffix();
+        QByteArray file_it(qfile.readAll());
+        message_stream << file_it;
+        tcp_socket->write(message);
     }
 }
 /**
@@ -326,4 +346,27 @@ void ClientSocketHandler::slot_readyread(){
     /**
       * 接收消息识别为收到消息，返回状态为成功，并返回好友id及消息本体
       */
+    if(tmp_message.startsWith("SEND_FILE")){
+        Status stat = SUCCESS;
+        file_byte mfile;
+        QtId from_id;
+        QtId to_id;
+        unsigned long long file_size;
+        QString file_type;
+        QString file_name;
+        QByteArray file_it;
+        message_stream >> from_id;
+        message_stream >> to_id;
+        message_stream >> file_size;
+        message_stream >> file_type;
+        message_stream >> file_name;
+        message_stream >> file_it;
+        mfile.from_id = from_id;
+        mfile.to_id = to_id;
+        mfile.file_name = file_name;
+        mfile.file_type = file_type;
+        mfile.file_byte = file_it;
+        QString errmsg = "";
+        adapter->update_receive_file_status(stat,mfile,errmsg);
+    }
 }
