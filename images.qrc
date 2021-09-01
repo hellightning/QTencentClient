@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/Icons">
+        <file>icon/img2.jpg</file>
+        <file>icon/img3.jpg</file>
+        <file>icon/img4.jpg</file>
+        <file>icon/img5.jpg</file>
+        <file>icon/img6.jpg</file>
+        <file>icon/img7.jpg</file>
+        <file>icon/img8.jpg</file>
+        <file>icon/img9.jpg</file>
+        <file>icon/img10.jpg</file>
+        <file>C:/Users/Faller/Desktop/icon/img1.jpg</file>
+        <file>icon/img1.jpg</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>images/avatar.png</file>
+        <file>images/qt.png</file>
+        <file>images/close.png</file>
+        <file>images/minimize.png</file>
+    </qresource>
+    <qresource prefix="/Config">
+        <file>config.xml</file>
+    </qresource>
+</RCC>

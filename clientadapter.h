@@ -16,6 +16,7 @@
 #include <QObject>
 #include "chatform.h"
 #include "iohandler.h"
+#include "clientlib.h"
 
 class RegisterForm;
 class SignInForm;
@@ -25,9 +26,6 @@ enum Status {
     SUCCESS,
     FAILED
 };
-
-typedef int QtId;
-typedef std::tuple<QtId, QString> User;
 
 class ClientAdapter : public QObject
 {
@@ -121,6 +119,10 @@ public:
      * @param friendID 好友ID
      */
     void close_chatform(QtId friendID);
+    /**
+     * @brief 取消注册
+     */
+    void cancel_register();
 
 public:
     QtId cliend_id = 114514; // 客户端id
@@ -131,7 +133,6 @@ public:
 private:
     bool is_signed = false; // 是否登录
     QString nick_name;
-//     static ClientAdapter* instance; 不做单例也行
 
 
     QHash<QtId, QList<SMessage>> qtid_to_msglist;

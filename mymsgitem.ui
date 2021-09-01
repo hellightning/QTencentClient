@@ -6,38 +6,74 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>315</width>
-    <height>138</height>
+    <width>700</width>
+    <height>154</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="nickName">
+  <widget class="QLabel" name="MsgBoard">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>10</y>
-     <width>71</width>
-     <height>21</height>
+     <x>420</x>
+     <y>30</y>
+     <width>171</width>
+     <height>81</height>
     </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(0, 170, 255);
+color: rgb(255, 255, 255);
+margin-right: 20px;
+margin-top:10px;
+border-radius: 5px;
+margin-bottom: 5px;
+</string>
    </property>
    <property name="text">
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="MsgBoard">
+  <widget class="QLabel" name="nickName">
    <property name="geometry">
     <rect>
-     <x>60</x>
-     <y>50</y>
-     <width>111</width>
-     <height>51</height>
+     <x>490</x>
+     <y>10</y>
+     <width>81</width>
+     <height>20</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(0, 170, 255);
-color: rgb(255, 255, 255);</string>
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="timeShow">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>10</y>
+     <width>72</width>
+     <height>15</height>
+    </rect>
    </property>
    <property name="text">
     <string>TextLabel</string>

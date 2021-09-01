@@ -15,7 +15,6 @@ SOURCES += \
     friendlistform.cpp \
     iohandler.cpp \
     itemwidget.cpp \
-    loginwindow.cpp \
     main.cpp \
     mymsgitem.cpp \
     mytest.cpp \
@@ -26,11 +25,11 @@ SOURCES += \
 HEADERS += \
     chatform.h \
     clientadapter.h \
+    clientlib.h \
     clientsockethandler.h \
     friendlistform.h \
     iohandler.h \
     itemwidget.h \
-    loginwindow.h \
     mymsgitem.h \
     mytest.h \
     qlabel_doubleclick.h \
@@ -41,7 +40,6 @@ FORMS += \
     chatform.ui \
     friendlistform.ui \
     itemwidget.ui \
-    loginwindow.ui \
     mymsgitem.ui \
     registerform.ui \
     signinform.ui
@@ -50,3 +48,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    images.qrc

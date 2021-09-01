@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "mymsgitem.h"
+#include <QTime>
 
 class ClientAdapter;
 
@@ -32,7 +33,7 @@ private:
     Ui::ChatForm *ui;
     ClientAdapter* adapter;
     QtId currentFriendID;
-    void add_item_to_ui(QString,QString);
+    void add_item_to_ui(QString nickName, QString realMsg,bool isMySelf);
 };
 
 #endif // CHATFORM_H

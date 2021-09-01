@@ -9,6 +9,7 @@ RegisterForm::RegisterForm(QWidget *parent) :
     ui(new Ui::RegisterForm)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_DeleteOnClose);
 }
 
 RegisterForm::~RegisterForm() { delete ui; }
@@ -18,9 +19,7 @@ void RegisterForm::set_adapter(ClientAdapter* cli) {
 }
 
 QString RegisterForm::get_nickname() {
-
     return ui -> nickNameTextEdit ->text();
-    //return ui ->text();
 }
 
 QString RegisterForm::get_password() {
@@ -36,7 +35,9 @@ void RegisterForm::on_confirmPushButton_clicked() {
         //do nothing!
     } else {
         //向服务器申请注册当前账号
-        adapter->make_register(ui->nickNameTextEdit->text(),ui->passwordSetter->text());
+        QString iconId = QString::number((qrand() % 10));
+        //占符1位
+        adapter->make_register(iconId + ui->nickNameTextEdit->text(),ui->passwordSetter->text());
         ui ->confirmPushButton -> setEnabled(false);
     }
 }
@@ -79,5 +80,12 @@ void RegisterForm::failed_msg(QString str) {
 
 void RegisterForm::show_qtid(QtId id) {
     show_alert_succ(QString("您的ID是：%1").arg(id));
+}
+
+
+void RegisterForm::on_cancelPushButton_clicked()
+{
+    adapter->cancel_register();
+    close();
 }
 

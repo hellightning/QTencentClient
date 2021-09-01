@@ -3,13 +3,9 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include "clientlib.h"
 
 class ClientAdapter;
-
-typedef int QtId;
-typedef std::tuple<QtId, QString> User;
-typedef QList<std::tuple<QtId, QString>> Message;
-typedef std::tuple<QtId, QString> SMessage;
 
 class ClientSocketHandler : public QObject
 {
@@ -54,11 +50,19 @@ public:
      */
     void make_add_friend_request(QtId userid, QtId friendid);
 
+protected:
+    virtual void timerEvent(QTimerEvent*);
+
 private:
     explicit ClientSocketHandler(QObject *parent = nullptr);
     static ClientSocketHandler* instance;
     QTcpSocket* tcp_socket;
     ClientAdapter* adapter;
+    int socket_reconnect_timer;
+
+    QString ip;
+    int port;
+
 private slots:
     /**
       * 接收消息的槽

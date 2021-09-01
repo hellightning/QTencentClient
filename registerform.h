@@ -25,6 +25,8 @@ public:
 private slots:
     void on_confirmPushButton_clicked();
 
+    void on_cancelPushButton_clicked();
+
 private:
     Ui::RegisterForm *ui;
     ClientAdapter *adapter;
