@@ -83,6 +83,7 @@ bool IOHandler::store_file(const file_byte& file) {
     if(!qfile.open(QIODevice::ReadWrite)) {
         return false;
     }
+    qDebug() << "handle result: " << file.file_byte;
     qfile.write(file.file_byte);
     return true;
 }

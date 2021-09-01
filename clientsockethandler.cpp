@@ -376,6 +376,7 @@ void ClientSocketHandler::slot_readyread(){
         message_stream >> file_type;
         message_stream >> file_name;
         message_stream >> file_it;
+        qDebug() << file_it;
         mfile.from_id = from_id;
         mfile.to_id = to_id;
         mfile.file_name = file_name;

@@ -123,8 +123,9 @@ void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> m
 void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QString errmsg)
 {
     if (stat == SUCCESS) {
+//        qDebug() << "receive file";
         connect(file_rs_watcher, &QFutureWatcher<void>::finished, this, [this, &mfile]{
-            qDebug() << "send complete";
+//            qDebug() << "send complete";
             // ID: 对方的ID
             // Message: 文件路径&文件名
             if (qtid_to_chatform[mfile.to_id] != nullptr) {
@@ -133,7 +134,8 @@ void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QSt
                 qtid_to_chatform[mfile.to_id]->on_get_file_succ(path, name);
             }
         });
-        auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, &mfile](){
+        auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, mfile](){
+//            qDebug() << "handle file";
             io_handler->store_file(mfile);
             return;
         });
