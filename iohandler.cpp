@@ -5,6 +5,7 @@
 #include <QDebug>
 
 QString PROJECT_STORAGE_DIR = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).append("/data/");
+QString FILE_STORAGE_DIR = PROJECT_STORAGE_DIR + "files/";
 
 
 
@@ -65,9 +66,9 @@ bool IOHandler::store_file(const file_byte& file) {
         if (!dir.exists()){
             dir.mkdir(PROJECT_STORAGE_DIR);
     }
-    QDir dir2(PROJECT_STORAGE_DIR + "files/");
+    QDir dir2(FILE_STORAGE_DIR);
         if (!dir2.exists()){
-            dir2.mkdir(PROJECT_STORAGE_DIR + "files/");
+            dir2.mkdir(FILE_STORAGE_DIR);
     }
     QString store_path = PROJECT_STORAGE_DIR + QString("files/%1.%2").arg(file.file_name).arg(file.file_type);
     QFile qfile(store_path);
@@ -84,6 +85,11 @@ bool IOHandler::store_file(const file_byte& file) {
     }
     qfile.write(file.file_byte);
     return true;
+}
+
+QString IOHandler::get_file_path(const QString &file_name, const QString &file_type) const
+{
+    return FILE_STORAGE_DIR;
 }
 
 

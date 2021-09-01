@@ -20,6 +20,8 @@ ClientAdapter::ClientAdapter(QObject *parent) : QObject(parent)
 
     io_handler = new IOHandler();
 
+    file_rs_watcher = new QFutureWatcher<void>(this);
+
     ClientSocketHandler::get_instance()->set_adapter(this);
 }
 
@@ -121,18 +123,25 @@ void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> m
 void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QString errmsg)
 {
     if (stat == SUCCESS) {
-        auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, &mfile](){
-            io_handler->store_file(mfile);
-        });
-        connect(&fb, &decltype(fb)::isFinished, [this, &mfile](){
+        connect(file_rs_watcher, &QFutureWatcher<void>::finished, this, [this, &mfile]{
+            qDebug() << "send complete";
             // ID: 对方的ID
             // Message: 文件路径&文件名
             if (qtid_to_chatform[mfile.to_id] != nullptr) {
-
+                QString path = io_handler->get_file_path(mfile.file_name, mfile.file_type);
+                QString name = mfile.file_name + "." + mfile.file_type;
+                qtid_to_chatform[mfile.to_id]->on_get_file_succ(path, name);
             }
         });
+        auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, &mfile](){
+            io_handler->store_file(mfile);
+            return;
+        });
+        file_rs_watcher->setFuture(fb);
     } else {
-
+        if (qtid_to_chatform[mfile.to_id] != nullptr) {
+            qDebug() << errmsg;
+        }
     }
 }
 
@@ -169,7 +178,6 @@ void ClientAdapter::make_register(QString nickname, QString pwd)
 
 void ClientAdapter::add_friend(QtId friendID)
 {
-    qDebug() << "fsdgdfsg";
     auto handler = ClientSocketHandler::get_instance();
     handler->make_add_friend_request(cliend_id, friendID);
 }

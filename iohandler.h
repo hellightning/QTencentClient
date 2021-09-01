@@ -14,6 +14,7 @@ public:
     void serialize_storage(const message_list& lst);
     message_list unserialize_storage(int qtid);
     bool store_file(const file_byte& file);
+    QString get_file_path(const QString& file_name, const QString& file_type) const;
 
 };
 

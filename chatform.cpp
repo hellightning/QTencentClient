@@ -64,8 +64,7 @@ void ChatForm::on_get_file_succ(QString filePass,QString fileName) {
      //TODO 弹文件传输完成消息 双击打开
      add_item_to_ui(adapter->qtid_to_nickname[currentFriendID],
          "对方发送 " + fileName,false);
-
-     qDebug() << "完成文件传输" << endl;
+     qDebug() << "完成文件传输:" << filePass << " " << fileName << endl;
 }
 
 

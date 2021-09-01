@@ -14,6 +14,7 @@
 #ifndef CLIENTADAPTER_H
 #define CLIENTADAPTER_H
 #include <QObject>
+#include <QFuture>
 #include "chatform.h"
 #include "iohandler.h"
 #include "clientlib.h"
@@ -155,6 +156,9 @@ private:
     SignInForm* sign_in_form = nullptr;
 
     IOHandler* io_handler = nullptr;
+
+    QFutureWatcher<void>* file_rs_watcher;
+
 signals:
 
 
