@@ -19,6 +19,7 @@ SOURCES += \
     mymsgitem.cpp \
     mytest.cpp \
     qlabel_doubleclick.cpp \
+    qmytext.cpp \
     registerform.cpp \
     signinform.cpp \
 
@@ -33,6 +34,7 @@ HEADERS += \
     mymsgitem.h \
     mytest.h \
     qlabel_doubleclick.h \
+    qmytext.h \
     registerform.h \
     signinform.h
 

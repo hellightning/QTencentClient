@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "mymsgitem.h"
 #include <QTime>
+#include <QTextEdit>
 
 class ClientAdapter;
 
