@@ -165,7 +165,7 @@ void ClientAdapter::open_chatform(QtId friendID)
 
         QList<SMessage> lst;
 
-        auto future = QtConcurrent::run(QThreadPool::globalInstance(), [this, &lst](int friendID){
+//        auto future = QtConcurrent::run(QThreadPool::globalInstance(), [this, &lst](int friendID){
 
             auto res = io_handler->unserialize_storage(friendID);
             auto nick = qtid_to_nickname[friendID];
@@ -182,11 +182,11 @@ void ClientAdapter::open_chatform(QtId friendID)
             qDebug() << lst;
 
 
-        }, friendID);
+//        }, friendID);
 
-        connect(&future, &QFuture<void>::isFinished, [this](int friendID, QList<SMessage> lst){
+//        connect(&future, &QFuture<void>::isFinished, [this](int friendID, QList<SMessage> lst){
             qtid_to_chatform[friendID] ->init_list_widget(friendID, lst);
-        }, friendID, lst);
+//        }, friendID, lst);
 
     } else {
         Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();
