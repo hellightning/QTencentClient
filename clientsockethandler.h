@@ -55,6 +55,10 @@ public:
      * @param friendid 对方ID
      */
     void make_add_friend_request(QtId userid, QtId friendid);
+    /**
+     * @brief 心跳包
+     */
+    void send_heart_beat_request();
 
 protected:
     virtual void timerEvent(QTimerEvent*);

@@ -42,16 +42,19 @@ void ClientSocketHandler::make_send_file_request(QtId from_id, QtId to_id, QStri
         message_stream << from_id;
         message_stream << to_id;
         QFile qfile(filename);
+        qfile.open(QIODevice::ReadOnly);
         QFileInfo info(qfile);
         if (qfile.size() > (1 << 8) * sizeof(quint64)) {
             adapter->update_receive_file_status(FAILED, {-1,-1,"","",QByteArray()}, "FILE IS TOO BIG");
             return;
         }
         message_stream << qfile.size();
-        message_stream << info.suffix();
         message_stream << info.completeSuffix();
+        message_stream << info.baseName();
+        qDebug() << "client have send file" << filename << info.suffix() << info.completeSuffix();
         QByteArray file_it(qfile.readAll());
         message_stream << file_it;
+        qDebug() << file_it;
         tcp_socket->write(message);
     }
 }
@@ -187,12 +190,24 @@ void ClientSocketHandler::make_add_friend_request(QtId userid, QtId friendid){
     }
 }
 
+void ClientSocketHandler::send_heart_beat_request()
+{
+    QByteArray msg;
+    QDataStream msg_stream(&msg, QIODevice::WriteOnly);
+    msg_stream << "HEART_BEAT";
+    tcp_socket->write(msg);
+    qDebug() << msg;
+}
+
 void ClientSocketHandler::timerEvent(QTimerEvent * e)
 {
     if (e->timerId() == socket_reconnect_timer) {
         if (tcp_socket->state() == QAbstractSocket::UnconnectedState) {
             tcp_socket->connectToHost(QHostAddress(ip) ,port);
             tcp_socket->waitForConnected(1000);
+            qDebug() << QString("Lost connection with server and reconnect..%1").arg(tcp_socket->state());
+        } else {
+            send_heart_beat_request();
         }
     }
 }

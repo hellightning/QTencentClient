@@ -139,9 +139,9 @@ void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QSt
         });
         file_rs_watcher->setFuture(fb);
     } else {
-        if (qtid_to_chatform[mfile.to_id] != nullptr) {
+//        if (qtid_to_chatform[mfile.to_id] != nullptr) {
             qDebug() << errmsg;
-        }
+//        }
     }
 }
 
@@ -249,5 +249,6 @@ void ClientAdapter::cancel_register()
 }
 
 void ClientAdapter::send_file(QtId friendID, QString fileDir) {
-
+    qDebug() << fileDir;
+    ClientSocketHandler::get_instance()->make_send_file_request(cliend_id, friendID, fileDir);
 }
