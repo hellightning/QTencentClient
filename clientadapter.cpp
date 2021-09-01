@@ -118,6 +118,11 @@ void ClientAdapter::update_receive_message_status(Status stat, QList<SMessage> m
     }
 }
 
+void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QString errmsg)
+{
+
+}
+
 void ClientAdapter::send_message(QtId friendId, QString msg)
 {
     auto handler = ClientSocketHandler::get_instance();
@@ -219,5 +224,10 @@ void ClientAdapter::cancel_register()
 {
     if (register_form != nullptr)
         register_form = nullptr;
+
+}
+
+void ClientAdapter::send_file(QtId friendID, QString fileDir)
+{
 
 }
