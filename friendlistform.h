@@ -4,10 +4,10 @@
 #include <QWidget>
 #include<QListWidget>
 #include "itemwidget.h"
+#include "clientlib.h"
 
 class ClientAdapter;
 
-typedef int QtId;
 namespace Ui {
 class FriendListForm;
 }

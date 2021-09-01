@@ -3,13 +3,9 @@
 
 #include <QObject>
 #include <QTcpSocket>
+#include "clientlib.h"
 
 class ClientAdapter;
-
-typedef int QtId;
-typedef std::tuple<QtId, QString> User;
-typedef QList<std::tuple<QtId, QString>> Message;
-typedef std::tuple<QtId, QString> SMessage;
 
 class ClientSocketHandler : public QObject
 {

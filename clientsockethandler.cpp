@@ -10,8 +10,8 @@ ClientSocketHandler::ClientSocketHandler(QObject *parent) : QObject(parent)
 {
     tcp_socket = new QTcpSocket();
     QHostAddress hostaddr;
-    hostaddr.setAddress("192.168.43.9");
-    tcp_socket->connectToHost(QHostAddress("192.168.43.9") ,11451);
+    auto [ip, port] = read_network_config_file();
+    tcp_socket->connectToHost(QHostAddress(ip) ,port);
     tcp_socket->waitForConnected(1000);
     connect(tcp_socket,&QTcpSocket::readyRead,this, &ClientSocketHandler::slot_readyread);
 }
@@ -225,6 +225,7 @@ void ClientSocketHandler::slot_readyread(){
         int count1 = 0;
         message_stream >> count1;
         qDebug() << count1;
+        QList<SMessage> biao;
         for (int i = 0; i < count1; ++i) {
             message_stream >> id;
             message_stream >> nickname;
@@ -234,20 +235,16 @@ void ClientSocketHandler::slot_readyread(){
             for(int j = 0;j< count2; ++j){
                 QString message;
                 message_stream >> message;
-                Status status = SUCCESS;
-                QString errmsg = "";
-                QList<SMessage> biao;
                 auto dui1 = std::make_tuple(id,message);
                 biao.append(dui1);
-                adapter->update_receive_message_status(status,biao,errmsg);
             }
-            qDebug() <<id <<" " << nickname;
             auto dui = std::make_tuple(id,nickname);
             friends.append(std::make_tuple(id, nickname));
         }
         QString msg = "";
         if(count1 != 0){
             adapter->update_friend_list_status(stat,friends,msg);
+            adapter->update_receive_message_status(SUCCESS,biao,"");
         }
         else{
             stat = FAILED;
@@ -255,7 +252,6 @@ void ClientSocketHandler::slot_readyread(){
             msg = "you don't have any friends\n add someone now :)";
             adapter-> update_friend_list_status(stat,friends,msg);
         }
-
     }
     /**
       * 接收消息识别为获取好友列表
