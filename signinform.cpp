@@ -45,6 +45,7 @@ QtId SignInForm::get_qtid() {
 //更改ui界面上的登录账号
 void SignInForm::set_qtid(QtId id) {
     //TODO
+    changeIcon(adapter ->qtid_to_nickname[id].mid(0,1).toInt());
     ui ->qidTextEdit ->setText(QString("%1").arg(id));
 }
 
