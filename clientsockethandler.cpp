@@ -44,7 +44,7 @@ void ClientSocketHandler::make_send_file_request(QtId from_id, QtId to_id, QStri
         QFile qfile(filename);
         qfile.open(QIODevice::ReadOnly);
         QFileInfo info(qfile);
-        if (qfile.size() > (1 << 8) * sizeof(quint64)) {
+        if (qfile.size() > (1 << 31) * sizeof(quint64)) {
             adapter->update_receive_file_status(FAILED, {-1,-1,"","",QByteArray()}, "FILE IS TOO BIG");
             return;
         }
