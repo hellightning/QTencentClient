@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QPainter>
+#include <QGraphicsDropShadowEffect>
 
 FriendListForm::FriendListForm(QWidget *parent) :
     QWidget(parent),
@@ -11,7 +12,15 @@ FriendListForm::FriendListForm(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setAttribute(Qt::WA_DeleteOnClose);
     ui->friendsPool->setResizeMode(QListView::Adjust);
+    setWindowFlag(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    auto shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0, 0);
+    shadow_effect->setColor(Qt::gray);
+    shadow_effect->setBlurRadius(8);
+    setGraphicsEffect(shadow_effect);
    // ui->friendsPool->setViewMode(QListView::IconMode);
 }
 
@@ -133,4 +142,41 @@ void FriendListForm::on_pushButton_clicked()
         adapter ->add_friend(ui -> friendListEdit ->toPlainText().toInt());
     }
 }
+
+
+void FriendListForm::on_closebutton_clicked()
+{
+    close();
+}
+
+
+void FriendListForm::on_minimizebutton_clicked()
+{
+    setWindowState(Qt::WindowMinimized);
+}
+
+void FriendListForm::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = true;
+        mouse_start_point = e->globalPos();
+        window_topleft_point = frameGeometry().topLeft();
+    }
+}
+
+void FriendListForm::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = false;
+    }
+}
+
+void FriendListForm::mouseMoveEvent(QMouseEvent *e)
+{
+    if (isDrag) {
+        QPoint dist = e->globalPos() - mouse_start_point;
+        this->move(window_topleft_point + dist);
+    }
+}
+
 

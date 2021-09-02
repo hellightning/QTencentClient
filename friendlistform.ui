@@ -13,71 +13,229 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="MyNicknameLabel">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>10</y>
-     <width>81</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <pointsize>10</pointsize>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="text">
-    <string>Faller</string>
-   </property>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">样式
+QPushButton {
+	border-radius: 4px;
+    border: 1px solid gray;
+    background-color: white;
+}
+
+QPushButton:hover {
+    background-color: rgb(236, 245, 255);
+    border: 1px solid rgb(64, 158, 255);
+    color: rgb(64, 158, 255);
+}
+
+QPushButton:pressed {
+    background-color: rgb(236, 245, 255);
+    border: 1px solid rgb(64, 100, 255);
+    color: rgb(64, 100, 255);
+}
+
+QLineEdit {
+	border-radius: 4px;
+    border: 1px solid gray;
+}
+
+QLineEdit:focus {
+    border: 1px solid rgb(64, 100, 255);
+}
+
+
+</string>
+  </property>
   <widget class="QListWidget" name="friendsPool">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>90</y>
-     <width>320</width>
-     <height>480</height>
+     <x>0</x>
+     <y>159</y>
+     <width>384</width>
+     <height>411</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QListWidget {
+   margin: 0 10px;
+   background-color: white;
+}</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QFrame" name="HeadFrame">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>590</y>
-     <width>93</width>
-     <height>41</height>
+     <x>0</x>
+     <y>0</y>
+     <width>384</width>
+     <height>161</height>
     </rect>
    </property>
-   <property name="text">
-    <string>加好友</string>
+   <property name="styleSheet">
+    <string notr="true">QFrame#HeadFrame{
+	margin: 10 10 0 10;
+	background-color: qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 rgba(64, 80, 255, 255), stop:1 rgba(64, 160, 255, 255));
+}</string>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="iconLabel">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>70</y>
+      <width>81</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MyNicknameLabel">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>90</y>
+      <width>201</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>18</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white</string>
+    </property>
+    <property name="text">
+     <string>Faller</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>20</y>
+      <width>91</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: white;
+font-size: 16px;</string>
+    </property>
+    <property name="text">
+     <string>QTencent</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="closebutton">
+    <property name="geometry">
+     <rect>
+      <x>329</x>
+      <y>10</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border-image: url(:/images/images/close.png);
+	background-color: rgba(0,0,0,0);
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 0, 0, 255), stop:1 rgba(255, 106, 0, 255));
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="minimizebutton">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>10</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	border-image: url(:/images/images/minimize.png);
+background-color: rgba(0,0,0,0);
+}
+
+QPushButton:hover {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(200, 200, 200, 150), stop:1 rgba(220, 220, 220, 150));
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
-  <widget class="QTextEdit" name="friendListEdit">
+  <widget class="QFrame" name="FooterFrame">
    <property name="geometry">
     <rect>
-     <x>40</x>
-     <y>595</y>
-     <width>201</width>
-     <height>31</height>
+     <x>0</x>
+     <y>570</y>
+     <width>384</width>
+     <height>91</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QLabel" name="iconLabel">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>10</y>
-     <width>65</width>
-     <height>65</height>
-    </rect>
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+    margin: 0 10px 10px 10px;
+    background-color: white;
+}</string>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
    </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QTextEdit" name="friendListEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>201</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 15px;
+margin: 0;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>260</x>
+      <y>20</y>
+      <width>93</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 18px;</string>
+    </property>
+    <property name="text">
+     <string>加好友</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <resources/>

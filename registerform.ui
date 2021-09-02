@@ -111,6 +111,9 @@ QPushButton:pressed {
      <height>51</height>
     </rect>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="passwordConfirm">
    <property name="geometry">
@@ -120,6 +123,9 @@ QPushButton:pressed {
      <width>311</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">

@@ -2,6 +2,7 @@
 #define SIGNINFORM_H
 
 #include <QWidget>
+#include <QMouseEvent>
 class ClientAdapter;
 typedef int QtId;
 namespace Ui {
@@ -24,6 +25,11 @@ public:
     void failed_sign(QString);
     void changeIcon(int);
 
+protected:
+    virtual void mousePressEvent(QMouseEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e);
+    virtual void mouseMoveEvent(QMouseEvent* e);
+
 private slots:
     void on_signInPushButton_clicked();
     void on_registerPushButton_clicked();
@@ -33,6 +39,9 @@ private slots:
 private:
     Ui::SignInForm *ui;
     ClientAdapter* adapter;
+    bool isDrag;
+    QPoint mouse_start_point;
+    QPoint window_topleft_point;
 };
 
 #endif // SIGNINFORM_H

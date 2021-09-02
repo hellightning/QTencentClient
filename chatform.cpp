@@ -3,6 +3,7 @@
 #include "clientadapter.h"
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QGraphicsDropShadowEffect>
 
 ChatForm::ChatForm(QWidget *parent) :
     QWidget(parent),
@@ -10,6 +11,14 @@ ChatForm::ChatForm(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
+    setWindowFlag(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
+    auto shadow_effect = new QGraphicsDropShadowEffect(this);
+    shadow_effect->setOffset(0, 0);
+    shadow_effect->setColor(Qt::gray);
+    shadow_effect->setBlurRadius(8);
+    ui->BackgroundFrame->setGraphicsEffect(shadow_effect);
+    ui->sendMessageButton->raise();
     //ui->MsgBoard->setViewMode(QListView::viewMode(QListView::ViewMode));
 }
 
@@ -72,6 +81,7 @@ void ChatForm::add_item_to_ui(QString nickName, QString realMsg,bool isMySelf) {
       MyMsgItem* pItemWidget = new MyMsgItem(this);
 
       pItemWidget->setData(nickName, realMsg.mid(5,realMsg.size()-5),realMsg.mid(0,5));
+      pItemWidget->setStyleSheet("border: 0px solid white");
       QListWidgetItem* pItem = new QListWidgetItem();
 
 //    手动调整自定义Item大小
@@ -93,6 +103,53 @@ void ChatForm::on_sendFileBtn_clicked() {
         add_item_to_ui(adapter->qtid_to_nickname[adapter ->cliend_id],
             "已发送 " + fileName,true);
         adapter ->send_file(currentFriendID,fileName);
+    }
+}
+
+
+void ChatForm::on_CloseButton_clicked()
+{
+    adapter ->close_chatform(currentFriendID);
+    close();
+}
+
+
+void ChatForm::on_SmallButton_clicked()
+{
+    setWindowState(Qt::WindowMinimized);
+}
+
+void ChatForm::mousePressEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = true;
+        mouse_start_point = e->globalPos();
+        window_topleft_point = frameGeometry().topLeft();
+    }
+}
+
+void ChatForm::mouseReleaseEvent(QMouseEvent *e)
+{
+    if (e->button() == Qt::LeftButton) {
+        isDrag = false;
+    }
+}
+
+void ChatForm::mouseMoveEvent(QMouseEvent *e)
+{
+    if (isDrag) {
+        QPoint dist = e->globalPos() - mouse_start_point;
+        this->move(window_topleft_point + dist);
+    }
+}
+
+void ChatForm::keyPressEvent(QKeyEvent *e)
+{
+    if (((QApplication::keyboardModifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Enter))
+            || ((QApplication::keyboardModifiers() == Qt::ControlModifier) && (e->key() == Qt::Key_Return))) {
+        if (focusWidget() == ui->typeBoard) {
+            on_sendMessageButton_clicked();
+        }
     }
 }
 

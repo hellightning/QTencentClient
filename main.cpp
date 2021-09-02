@@ -9,15 +9,15 @@
 
 ClientSocketHandler* ClientSocketHandler::instance = nullptr;
 
-QTEST_MAIN(mytest);
+// QTEST_MAIN(mytest);
 
-//int main(int argc, char *argv[])
-//{
-//    QApplication a(argc, argv);
-//    //RegisterForm w;
-//    //w.show();
-//    ClientAdapter adapter;
-//    return a.exec();
-//}
+int main(int argc, char *argv[])
+{
+   QApplication a(argc, argv);
+   //RegisterForm w;
+   //w.show();
+   ClientAdapter adapter;
+   return a.exec();
+}
 
 
