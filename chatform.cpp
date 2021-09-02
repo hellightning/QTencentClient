@@ -19,6 +19,7 @@ ChatForm::ChatForm(QWidget *parent) :
     shadow_effect->setBlurRadius(8);
     ui->BackgroundFrame->setGraphicsEffect(shadow_effect);
     ui->sendMessageButton->raise();
+    ui->MsgBoard->clear();
     //ui->MsgBoard->setViewMode(QListView::viewMode(QListView::ViewMode));
 }
 

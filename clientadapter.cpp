@@ -128,10 +128,11 @@ void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QSt
 {
     if (stat == SUCCESS) {
         connect(file_rs_watcher, &QFutureWatcher<void>::finished, this, [this, &mfile]{
-            if (qtid_to_chatform[mfile.to_id] != nullptr) {
+            qDebug() << "qtid_to_chatform[mfile.to_id]" << qtid_to_chatform << qtid_to_chatform[mfile.from_id];
+            if (qtid_to_chatform[mfile.from_id] != nullptr) {
                 QString path = io_handler->get_file_path(mfile.file_name, mfile.file_type);
                 QString name = mfile.file_name + "." + mfile.file_type;
-                qtid_to_chatform[mfile.to_id]->on_get_file_succ(path, name);
+                qtid_to_chatform[mfile.from_id]->on_get_file_succ(path, name);
             }
         });
         auto fb = QtConcurrent::run(QThreadPool::globalInstance(), [this, mfile](){
@@ -197,14 +198,14 @@ void ClientAdapter::open_chatform(QtId friendID)
 
             auto res = io_handler->unserialize_storage(friendID);
             auto nick = qtid_to_nickname[friendID];
-
+            qDebug() << "load" << res.message.size() << " " << qtid_to_chatform;
 
 
             if (res.qtid != -1) {
                 foreach(auto& v, res.message) {
                     lst.append(std::make_tuple(v.first, v.second));
                 }
-                qtid_to_chatform[friendID]->init_list_widget(friendID,lst);
+//                qtid_to_chatform[friendID]->init_list_widget(friendID,lst);
             }
             lst.append(qtid_to_msglist[friendID]);
             qDebug() << lst;
@@ -229,14 +230,14 @@ void ClientAdapter::close_chatform(QtId friendID)
         qtid_to_chatform[friendID] = nullptr;
     }
     QtConcurrent::run(QThreadPool::globalInstance(), [this](QtId friendID) {
-        //qDebug() << "close_chatform" << qtid_to_msglist[friendID].size();
+        qDebug() << "close_chatform" << qtid_to_msglist[friendID].size();
         message_list lst;
         lst.qtid = friendID;
         lst.nickname = qtid_to_nickname[friendID];
         for(auto& [id, msg] : qtid_to_msglist[friendID]) {
             lst.message.append(qMakePair(id, msg));
         }
-        //qDebug() << "close:" << lst.message;
+        qDebug() << "close:" << lst.message;
         io_handler->serialize_storage(lst);
         qtid_to_msglist[friendID].clear();
     }, friendID);
