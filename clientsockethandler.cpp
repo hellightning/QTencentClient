@@ -207,8 +207,10 @@ void ClientSocketHandler::timerEvent(QTimerEvent * e)
         if (tcp_socket->state() == QAbstractSocket::UnconnectedState) {
             tcp_socket->connectToHost(QHostAddress(ip) ,port);
             tcp_socket->waitForConnected(1000);
-            qDebug() << QString("Lost connection with server and reconnect..%1").arg(tcp_socket->state());
-            if (tcp_socket->ConnectedState == QAbstractSocket::ConnectedState && adapter->cliend_id != 114514) {
+            qDebug() << QString("Lost connection with server and reconnect..%1")
+                        .arg(tcp_socket->state());
+            if (tcp_socket->ConnectedState == QAbstractSocket::ConnectedState
+                    && adapter->cliend_id != 114514) {
                 make_sign_request(adapter->cliend_id, adapter->password);
             }
         } else {
