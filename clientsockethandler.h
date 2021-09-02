@@ -1,3 +1,7 @@
+/**
+ * @file clientsockethandler.h
+ * @brief Client的Socket单例
+ */
 #ifndef CLIENTSOCKETHANDLER_H
 #define CLIENTSOCKETHANDLER_H
 
@@ -25,6 +29,9 @@ public:
      * @param filename  文件路径
      */
     void make_send_file_request(QtId from_id,QtId to_id,QString filename);
+    /**
+     * @brief set_adapter 设置adapter
+     */
     void set_adapter(ClientAdapter*);
     /**
      * @brief 发送消息的请求
@@ -61,16 +68,23 @@ public:
     void send_heart_beat_request();
 
 protected:
-    virtual void timerEvent(QTimerEvent*);
+    /**
+     * @brief timerEvent 计时器事件
+     */
+    virtual void timerEvent(QTimerEvent* e);
 
 private:
+    /**
+     * @brief ClientSocketHandler Socket的构造函数
+     * @param parent 父物体
+     */
     explicit ClientSocketHandler(QObject *parent = nullptr);
-    static ClientSocketHandler* instance;
-    QTcpSocket* tcp_socket;
-    ClientAdapter* adapter;
-    int socket_reconnect_timer;
-    QString ip;
-    int port;
+    static ClientSocketHandler* instance; // 单例对象
+    QTcpSocket* tcp_socket; // socket对象
+    ClientAdapter* adapter; // adapter对象
+    int socket_reconnect_timer; // 重连接的计时器
+    QString ip; // ip地址
+    int port; // 端口号
 
 private slots:
     /**
@@ -80,6 +94,10 @@ private slots:
 signals:
 };
 
+/**
+ * @brief ClientSocketHandler::get_instance 获取单例对象的指针
+ * @return 单例对象的指针
+ */
 inline ClientSocketHandler *ClientSocketHandler::get_instance(){
     if(instance == nullptr){
         instance = new ClientSocketHandler();

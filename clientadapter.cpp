@@ -140,11 +140,7 @@ void ClientAdapter::update_receive_file_status(Status stat, file_byte mfile, QSt
             return;
         });
         file_rs_watcher->setFuture(fb);
-    } else {
-//        if (qtid_to_chatform[mfile.to_id] != nullptr) {
-            qDebug() << errmsg;
-//        }
-    }
+    } 
 }
 
 void ClientAdapter::send_message(QtId friendId, QString msg)
@@ -193,29 +189,17 @@ void ClientAdapter::open_chatform(QtId friendID)
         qtid_to_chatform[friendID]->show();
 
         QList<SMessage> lst;
-
-//        auto future = QtConcurrent::run(QThreadPool::globalInstance(), [this, &lst](int friendID){
-
             auto res = io_handler->unserialize_storage(friendID);
             auto nick = qtid_to_nickname[friendID];
             qDebug() << "load" << res.message.size() << " " << qtid_to_chatform;
-
-
             if (res.qtid != -1) {
                 foreach(auto& v, res.message) {
                     lst.append(std::make_tuple(v.first, v.second));
                 }
-//                qtid_to_chatform[friendID]->init_list_widget(friendID,lst);
             }
             lst.append(qtid_to_msglist[friendID]);
             qDebug() << lst;
-
-
-//        }, friendID);
-
-//        connect(&future, &QFuture<void>::isFinished, [this](int friendID, QList<SMessage> lst){
             qtid_to_chatform[friendID] ->init_list_widget(friendID, lst);
-//        }, friendID, lst);
 
     } else {
         Qt::WindowFlags flags = qtid_to_chatform[friendID]->windowFlags();

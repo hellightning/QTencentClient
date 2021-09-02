@@ -1,15 +1,9 @@
 /**
- * @file cilentadapter.h
+ * @file clientadapter.h
  * @brief 从Client到UI的Adpater
  * @version 0.1.0
  * @date 2021/08/29
  * @author lire
- *
- * @b 修改记录：
- * @li  0828
- *     - 构建了类
- * @li 0829
- *     - 添加实现
  */
 #ifndef CLIENTADAPTER_H
 #define CLIENTADAPTER_H
@@ -141,24 +135,24 @@ public:
 
 public:
     QtId cliend_id = 114514; // 客户端id
-    QString nick_name;
-    QString password;
-    QHash<QtId, ChatForm*> qtid_to_chatform; // qtid的信息
-    QHash<QtId, QString> qtid_to_nickname;
-    FriendListForm* friend_list_form = nullptr;
+    QString nick_name; // 昵称
+    QString password; // 密码
+    QHash<QtId, ChatForm*> qtid_to_chatform; // qtid到窗口的hash
+    QHash<QtId, QString> qtid_to_nickname; // qtid到昵称的hash
+    FriendListForm* friend_list_form = nullptr; // 好友列表的窗体
 
 private:
     bool is_signed = false; // 是否登录
 
 
-    QHash<QtId, QList<SMessage>> qtid_to_msglist;
+    QHash<QtId, QList<SMessage>> qtid_to_msglist; // qtid到消息的队列
 
-    RegisterForm* register_form = nullptr;
-    SignInForm* sign_in_form = nullptr;
+    RegisterForm* register_form = nullptr; // qtid到注册状态的队列
+    SignInForm* sign_in_form = nullptr;  // qtid到登陆状态的队列
 
-    IOHandler* io_handler = nullptr;
+    IOHandler* io_handler = nullptr; // 文件管理类的指针
 
-    QFutureWatcher<void>* file_rs_watcher;
+    QFutureWatcher<void>* file_rs_watcher; // 文件异步观察
 
 signals:
 
