@@ -10,12 +10,18 @@ QString FILE_STORAGE_DIR = PROJECT_STORAGE_DIR + "files/";
 
 
 QDataStream& operator<<(QDataStream& output, const message_list& lst) {
-    output << lst.qtid << lst.nickname << lst.message;
+    foreach(auto& e, lst.message) {
+        output << e;
+    }
     return output;
 }
 
 QDataStream& operator>>(QDataStream& input, message_list& lst) {
-    input >> lst.qtid >> lst.nickname >> lst.message;
+    while(!input.atEnd()) {
+        QPair<int, QString> v;
+        input >> v;
+        lst.message.append(v);
+    }
     return input;
 }
 
@@ -33,16 +39,28 @@ void IOHandler::serialize_storage(const message_list &lst)
     QString path = PROJECT_STORAGE_DIR + QString("user_%1.qnm").arg(lst.qtid);
     QFile file(path);
     qDebug() << "serialize" << lst.message;
+    qDebug() << path << " " << file.exists();
     if (!file.exists()) {
         file.open(QFile::WriteOnly | QFile::Truncate);
     //    qDebug() << path;
-        qDebug() << path;
-        QDataStream out(&file);
-        out << lst;
+        std::string str;
+        for(auto& s : lst.message) {
+            str += std::to_string(s.first);
+            str += "~";
+            str += s.second.toStdString();
+            str += "\n";
+        }
+        file.write(str.c_str());
     } else {
         file.open(QFile::WriteOnly | QFile::Append);
-        QDataStream out(&file);
-        out << lst.message;
+        std::string str;
+        for(auto& s : lst.message) {
+            str += std::to_string(s.first);
+            str += "~";
+            str += s.second.toStdString();
+            str += "\n";
+        }
+        file.write(str.c_str());
     }
 
 }
@@ -51,14 +69,37 @@ message_list IOHandler::unserialize_storage(int qtid) {
     QString path = PROJECT_STORAGE_DIR + QString("user_%1.qnm").arg(qtid);
     QFile file(path);
     if (!file.exists()) {
+        qDebug() << "not exists";
         return message_list{-1, "", {}};
     }
-    if (!file.open(QIODevice::ReadOnly))
-        return message_list{-1, "", {}};;
-    QDataStream is(&file);
-    message_list lst;
-    is >> lst;
-    return lst;
+    if (!file.open(QIODevice::ReadOnly)) {
+        qDebug() << "cannot open";
+        return message_list{-1, "", {}};
+    }
+    char* buffer = new char[1024];
+    file.read(buffer, 1024);
+
+    QString str(buffer);
+    QList<QPair<int, QString>> s_e;
+    auto lst = str.split("\n");
+    for(auto& v : lst) {
+        auto e = v.split("~");
+        if (e.size() >= 2) {
+            auto s = e[0].toInt();
+            auto s2 = e[1];
+            s_e.push_back(qMakePair(s, s2));
+        }
+    }
+    qDebug() << s_e;
+//    auto str = std::string(std::move(buffer));
+//    size_t pos = str.find('\n');
+//    size_t s_size = str.size();
+//    while (pos != std::string::npos) {
+//        auto x = str.substr(0, pos);
+//        str = str.substr(pos + 1, s_size);
+//        pos = str.find('\n');
+//    }
+    return {0, "", s_e};
 }
 
 bool IOHandler::store_file(const file_byte& file) {

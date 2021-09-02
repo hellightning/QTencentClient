@@ -4,12 +4,9 @@
 #include <QWidget>
 #include "mymsgitem.h"
 #include <QTime>
-<<<<<<< HEAD
 #include <QTextEdit>
-=======
 #include <QMouseEvent>
 #include <QKeyEvent>
->>>>>>> 105c0b07fedb26c5c13485af4b32b30c3be8e428
 
 class ClientAdapter;
 

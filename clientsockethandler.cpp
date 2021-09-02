@@ -202,7 +202,6 @@ void ClientSocketHandler::send_heart_beat_request()
 
 void ClientSocketHandler::timerEvent(QTimerEvent * e)
 {
-    qDebug() << QTime::currentTime();
     if (e->timerId() == socket_reconnect_timer) {
         if (tcp_socket->state() == QAbstractSocket::UnconnectedState) {
             tcp_socket->connectToHost(QHostAddress(ip) ,port);
